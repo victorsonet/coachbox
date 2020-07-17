@@ -60,7 +60,7 @@ class ChController extends AbstractController
     }
 
     /**
-     * @Route("/ch-remove/{id}")
+     * @Route("/ch-remove/{id}", name="remove_id", methods={"DELETE"})
      */
 
     public function remove($id)
@@ -69,9 +69,7 @@ class ChController extends AbstractController
         $coach = $entityManager->getRepository(Coach::class)->find($id);
         $entityManager->remove($coach);
         $entityManager->flush();
-        return $this->redirectToRoute('show_coach', [
-            'id'=>$id
-        ]);
+        return $this->redirectToRoute('show_coaches');
     }
 
     /**

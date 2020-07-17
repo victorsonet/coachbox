@@ -54,7 +54,12 @@
             </li>
         {% endfor %}
     </ul>
+    <form action="{{ path('remove_id', { id: coach.id }) }}" method="POST" >
+    <input type="hidden" name="_method" value="DELETE"/>
+    <button type="submit" class="btn btn-danger">Remove coach</button>
+    </form>
 </div>
+
 {% endblock %}
 
 {% block javascripts %}
