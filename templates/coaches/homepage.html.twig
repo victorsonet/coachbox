@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="jumbotron-img jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">Find your coach</h1>
+        <p class="lead">Even those who you didnt think were available!</p>
+    </div>
+</div>
+<div class="container">
+    <div class="row mb-3">
+        <div class="col">
+            <button class="btn btn-question">Get a coach!</button>
+        </div>
+    </div>
+    <div class="row">
+
+        {% for coach in coachlist %}
+            <div class="col-12 mt-3">
+                <div class="q-container p-4">
+                    <div class="row">
+                        <div class="col-2 text-center">
+                            <img src="{{ asset('images/magic-photo.png') }}" width="100" height="100">
+                            <div class="d-block mt-3 vote-arrows">
+                                <a class="vote-up" href="#"><i class="far fa-arrow-alt-circle-up"></i></a>
+                                <a class="vote-down" href="#"><i class="far fa-arrow-alt-circle-down"></i></a>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <a class="q-title" href="{{ path('show_coach', { id: coach.id }) }}"><h2>{{ coach.firstName }} {{ coach.lastName }}</h2></a>
+                            <div class="q-display p-3">
+                                <i class="fa fa-quote-left mr-3"></i>
+                                <p class="d-inline">{{ coach.achievements }}</p>
+                                <p class="pt-4"><strong>{{ coach.game }}</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a class="answer-link" href="{{ path('app_team_show', { slug: 'x-a-spell' }) }}" style="color: #fff;">
+                    <p class="q-display-response text-center p-3">
+                        <i class="fa fa-magic magic-wand"></i> 15 comments
+                    </p>
+                </a>
+            </div>
+
+       
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
