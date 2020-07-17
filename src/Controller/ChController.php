@@ -42,7 +42,7 @@ class ChController extends AbstractController
      * @Route("/ch-edit/{id}", name="ch_update")
      */
 
-    public function update($id)
+    public function update($id, Request $request)
     {
         $entityManager = $this->getDoctrine()->getManager();
         $coach = $entityManager->getRepository(Coach::class)->find($id);
@@ -51,12 +51,36 @@ class ChController extends AbstractController
             throw $this->createNotFoundException('No coach under this id' .$id);
         }
 
-        $coach->setFirstName('Ja');
-        $entityManager->flush();
+        $form = $this->createFormBuilder($coach)
+            ->add('firstName', TextType::class)
+            ->add('lastName', TextType::class)
+            ->add('game', TextType::class)
+            ->add('achievements', TextType::class)
+            ->add('save', SubmitType::class, ['label' => 'Update Coach'])
+            ->getForm();
 
-        return $this->redirectToRoute('show_coach', [
-            'id' => $coach->getId()
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            // $form->getData() holds the submitted values
+            // but, the original `$task` variable has also been updated
+            $coach = $form->getData();
+    
+            // ... perform some action, such as saving the task to the database
+            // for example, if Task is a Doctrine entity, save it!
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->flush();
+    
+            return $this->redirectToRoute('show_coach', [
+                'id'=>$coach->getId() 
         ]);
+        }
+
+
+        return $this->render('coaches/edit.html.twig', [
+            'form'=>$form->createView()
+        ]);
+
+
     }
 
     /**

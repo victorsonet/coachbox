@@ -54,6 +54,7 @@
             </li>
         {% endfor %}
     </ul>
+    <a href="{{ path('ch_update', {id: coach.id})}}" class="btn btn-secondary mb-3"> Coach update </a>
     <form action="{{ path('remove_id', { id: coach.id }) }}" method="POST" >
     <input type="hidden" name="_method" value="DELETE"/>
     <button type="submit" class="btn btn-danger">Remove coach</button>
