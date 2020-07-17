@@ -3,38 +3,20 @@
 namespace App\Controller;
 
 use App\Entity\Coach;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use App\Repository\CoachRepository;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class ChController extends AbstractController
 {
-    /**
-     * @Route("/ch", name="ch_coach")
-     */
-    public function createCoach(ValidatorInterface $validator)
-    {
-        $entityManager = $this->getDoctrine()->getManager();
-
-        $coach = new Coach();
-        $coach->setFirstName('Jonatan');
-        $coach->setLastName('Lundberg');
-        $coach->setGame('CSGO');
-       $coach->setAchievements('3x Major');
-
-       $entityManager->persist($coach);
-        $entityManager->flush();
-
-        $errors = $validator->validate($coach);
-        if(count($errors)>0) {
-            return new Response((string) $errors, 400);
-        }
-     return new Response('Saved new coach with ID! ' .$coach->getId()); 
-    }
-
 
     /**
      * @Route("/ch/{id}", name="show_coach")
@@ -108,9 +90,38 @@ class ChController extends AbstractController
     /**
      * @Route("/signup", name="coach_reg")
      */
-    public function reg()
+    public function reg(Request $request)
     {
-        return new Response('asd');
+        $coach = new Coach();
+
+        $form = $this->createFormBuilder($coach)
+            ->add('firstName', TextType::class)
+            ->add('lastName', TextType::class)
+            ->add('game', TextType::class)
+            ->add('achievements', TextType::class)
+            ->add('save', SubmitType::class, ['label' => 'Create Task'])
+            ->getForm();
+
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+                // $form->getData() holds the submitted values
+                // but, the original `$task` variable has also been updated
+                $coach = $form->getData();
+        
+                // ... perform some action, such as saving the task to the database
+                // for example, if Task is a Doctrine entity, save it!
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($coach);
+                $entityManager->flush();
+        
+                return $this->redirectToRoute('show_coach', [
+                    'id'=>$coach->getId() 
+               ]);
+            }
+
+        return $this->render('coaches/signup.html.twig', [
+            'form' => $form->createView(),
+        ]); 
     }
 }   
 
