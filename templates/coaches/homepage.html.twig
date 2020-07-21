@@ -20,7 +20,7 @@
     </div>
     <div class="row">
 
-        {% for coach in coachlist %}
+        {% for coach in pagination %}
             <div class="col-12 mt-3">
                 <div class="q-container p-4">
                     <div class="row">
@@ -47,10 +47,9 @@
                     </p>
                 </a>
             </div>
-
-       
         {% endfor %}
     </div>
+        {{ knp_pagination_render(pagination) }}
 </div>
 {% endblock %}
 

@@ -14,6 +14,7 @@ use App\Repository\CoachRepository;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Knp\Component\Pager\PaginatorInterface;
 
 class ChController extends AbstractController
 {
@@ -99,7 +100,7 @@ class ChController extends AbstractController
     /**
      * @Route("/", name="show_coaches")
      */
-    public function index(Request $request)
+    public function index(Request $request, PaginatorInterface $paginator)
     {
         $term = $request->query->get('term');
         $en=$this->getDoctrine()->getManager();
@@ -111,10 +112,15 @@ class ChController extends AbstractController
         } else {
             $coaches = $coachrepo->findAll();
         }
+    
+        $pagination = $paginator->paginate( $coaches, /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+        10 /*limit per page*/);
         
         return $this->render('coaches/homepage.html.twig', [
             'coachlist' => $coaches,
-            'term' => $term
+            'term' => $term,
+            'pagination' => $pagination,
         ]);
     }
 

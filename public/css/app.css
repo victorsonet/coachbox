@@ -3,6 +3,17 @@ body {
     color: #444;
 }
 
+.pagination {
+    display: inline-block;
+  }
+  
+  .pagination a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+  }
+
 .jumbotron-img {
     background: rgb(237,116,88);
     background: linear-gradient(302deg, rgba(237,116,88,1) 16%, rgba(51,61,81,1) 97%);
@@ -125,3 +136,4 @@ fieldset[disabled] .btn-question.active {
 footer {
     background-color: #efefee;
 }
+
