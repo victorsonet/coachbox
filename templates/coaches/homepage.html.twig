@@ -32,7 +32,7 @@
                             </div>
                         </div>
                         <div class="col">
-                            <a class="q-title" href="{{ path('show_coach', { id: coach.id }) }}"><h2>{{ coach.firstName }} {{ coach.lastName }}</h2></a>
+                            <a class="q-title" href="{{ path('show_coach', { slug: coach.id }) }}"><h2>{{ coach.firstName }} {{ coach.lastName }}</h2></a>
                             <div class="q-display p-3">
                                 <i class="fa fa-quote-left mr-3"></i>
                                 <p class="d-inline">{{ coach.achievements }}</p>
@@ -41,7 +41,7 @@
                         </div>
                     </div>
                 </div>
-                <a class="answer-link" href="{{ path('show_coach', { id: coach.id }) }}" style="color: #fff;">
+                <a class="answer-link" href="{{ path('show_coach', { slug: coach.id }) }}" style="color: #fff;">
                     <p class="q-display-response text-center p-3">
                         <i class="fa fa-magic magic-wand"></i> 15 comments
                     </p>

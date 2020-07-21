@@ -20,19 +20,20 @@ class ChController extends AbstractController
 {
 
     /**
-     * @Route("/ch/{id}", name="show_coach")
+     * @Route("/ch/{slug}", name="show_coach")
      */
-    public function show_id($id, CoachRepository $coachRepository)
+    public function show_id($slug, CoachRepository $coachRepository)
     {
-        $coach = $coachRepository->find($id);
+        $coach = $coachRepository->findOneBySlug($slug);
         $teams = [
             'Vox Eminor',
             'Renegades',
             'FaZe',
         ];
 
+
         if (!$coach) {
-            throw $this->createNotFoundException('There is no one under this id!' .$id);
+            throw $this->createNotFoundException('There is no one under this slug!' .$slug);
         }
         return $this->render('coaches/show.html.twig', [
             'coach'=>$coach, 'teams'=>$teams
@@ -113,9 +114,10 @@ class ChController extends AbstractController
             $coaches = $coachrepo->findAll();
         }
     
-        $pagination = $paginator->paginate( $coaches, /* query NOT result */
+        $pagination = $paginator->paginate(
+            $coaches, /* query NOT result */
             $request->query->getInt('page', 1), /*page number*/
-        10 /*limit per page*/);
+            10 /*limit per page*/);
         
         return $this->render('coaches/homepage.html.twig', [
             'coachlist' => $coaches,

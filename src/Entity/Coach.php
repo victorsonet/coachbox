@@ -4,12 +4,16 @@ namespace App\Entity;
 
 use App\Repository\CoachRepository;
 use Doctrine\ORM\Mapping as ORM;
-
+use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Gedmo\Mapping\Annotation as Gedmo;
+ 
 /**
  * @ORM\Entity(repositoryClass=CoachRepository::class)
  */
 class Coach
 {
+    use TimestampableEntity;
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -36,6 +40,12 @@ class Coach
      * @ORM\Column(type="string", length=255)
      */
     private $achievements;
+
+    /**
+     * @ORM\Column(type="string", unique=true)
+     * @Gedmo\Slug(fields={"first_name","last_name"}, updatable=true)
+     */
+    private $slug;
 
     public function getId(): ?int
     {
