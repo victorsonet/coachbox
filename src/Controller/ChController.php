@@ -99,13 +99,22 @@ class ChController extends AbstractController
     /**
      * @Route("/", name="show_coaches")
      */
-    public function index()
+    public function index(Request $request)
     {
-        $en=$this->getDoctrine()->getRepository(Coach::class);
-        $coaches=$en->findAll();
+        $term = $request->query->get('term');
+        $en=$this->getDoctrine()->getManager();
+        $coachrepo=$en->getRepository(Coach::class);
+        
+        if ($term)
+        {
+            $coaches = $coachrepo->findByTerm($term);  
+        } else {
+            $coaches = $coachrepo->findAll();
+        }
         
         return $this->render('coaches/homepage.html.twig', [
-            'coachlist' => $coaches
+            'coachlist' => $coaches,
+            'term' => $term
         ]);
     }
 
@@ -144,6 +153,11 @@ class ChController extends AbstractController
         return $this->render('coaches/signup.html.twig', [
             'form' => $form->createView(),
         ]); 
+    }
+
+    public function search(Request $request, $id)
+    {
+
     }
 }   
 

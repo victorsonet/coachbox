@@ -19,22 +19,20 @@ class CoachRepository extends ServiceEntityRepository
         parent::__construct($registry, Coach::class);
     }
 
-    // /**
-    //  * @return Coach[] Returns an array of Coach objects
-    //  */
-    /*
-    public function findByExampleField($value)
+      /**
+      * @return Coach[] Returns an array of Coach objects
+      */
+   
+    public function findByTerm($term)
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('c.first_name LIKE :val OR c.last_name LIKE :val')
+            ->setParameter('val', '%'.$term.'%' )
             ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?Coach

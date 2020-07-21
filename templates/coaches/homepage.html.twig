@@ -13,6 +13,11 @@
             <button class="btn btn-question">Get a coach!</button>
         </div>
     </div>
+    <div>
+        <form method="get" action="{{ path('show_coaches') }}">
+            <input type="search" name="term" value="{{ term }}"/>
+        </form>
+    </div>
     <div class="row">
 
         {% for coach in coachlist %}
