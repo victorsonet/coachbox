@@ -6,13 +6,16 @@ use App\Repository\CoachRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
  
 /**
  * @ORM\Entity(repositoryClass=CoachRepository::class)
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=false)
  */
 class Coach
 {
     use TimestampableEntity;
+    use SoftDeleteableEntity;
 
     /**
      * @ORM\Id()
