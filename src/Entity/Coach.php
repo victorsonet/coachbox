@@ -50,6 +50,11 @@ class Coach
      */
     private $slug;
 
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

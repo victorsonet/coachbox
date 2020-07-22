@@ -44,7 +44,7 @@ class ChController extends AbstractController
      * @Route("/ch-edit/{id}", name="ch_update")
      */
 
-    public function update($id, Request $request)
+    public function update(Request $request, $id)
     {
         $entityManager = $this->getDoctrine()->getManager();
         $coach = $entityManager->getRepository(Coach::class)->find($id);
@@ -73,7 +73,7 @@ class ChController extends AbstractController
             $entityManager->flush();
     
             return $this->redirectToRoute('show_coach', [
-                'id'=>$coach->getId() 
+                'slug'=>$coach->getSlug() 
         ]);
         }
 
@@ -154,7 +154,7 @@ class ChController extends AbstractController
                 $entityManager->flush();
         
                 return $this->redirectToRoute('show_coach', [
-                    'id'=>$coach->getId() 
+                    'slug'=>$coach->getSlug() 
                ]);
             }
 
