@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Coach;
+use App\Entity\Product;
+
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -11,8 +13,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use App\Repository\CoachRepository;
+use App\Repository\ProductRepository;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Knp\Component\Pager\PaginatorInterface;
 
@@ -22,21 +26,42 @@ class ChController extends AbstractController
     /**
      * @Route("/ch/{slug}", name="show_coach")
      */
-    public function show_id($slug, CoachRepository $coachRepository)
+    public function show_id($slug, CoachRepository $coachRepository, ProductRepository $productRepository,Request $request)
     {
         $coach = $coachRepository->findOneBySlug($slug);
-        $teams = [
-            'Vox Eminor',
-            'Renegades',
-            'FaZe',
-        ];
+        $products = $coach->getProducts();
+        $product = new Product();
+        $product->setCoach($coach);
 
+        $form = $this->createFormBuilder($product)
+            ->add('Type', TextType::class)
+            ->add('price', IntegerType::class)
+            ->add('description', TextType::class)
+            ->add('game', TextType::class)
+            ->add('save', SubmitType::class, ['label' => 'Create Product'])
+            ->getForm();
+
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+                // $form->getData() holds the submitted values
+                // but, the original `$task` variable has also been updated
+                $product = $form->getData();
+        
+                // ... perform some action, such as saving the task to the database
+                // for example, if Task is a Doctrine entity, save it!
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($product);
+                $entityManager->flush();
+            }
 
         if (!$coach) {
             throw $this->createNotFoundException('There is no one under this slug!' .$slug);
         }
+
         return $this->render('coaches/show.html.twig', [
-            'coach'=>$coach, 'teams'=>$teams
+            'coach'=>$coach, 
+            'products'=>$products,
+            'form' => $form->createView(),
         ]);
     }
 

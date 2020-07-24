@@ -27,7 +27,7 @@ class Product
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Type;
+    private $type;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
@@ -44,6 +44,12 @@ class Product
      */
     private $game;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Coach::class, inversedBy="products")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $coach;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -51,12 +57,12 @@ class Product
 
     public function getType(): ?string
     {
-        return $this->Type;
+        return $this->type;
     }
 
-    public function setType(string $Type): self
+    public function setType(string $type): self
     {
-        $this->Type = $Type;
+        $this->type = $type;
 
         return $this;
     }
@@ -93,6 +99,18 @@ class Product
     public function setGame(string $game): self
     {
         $this->game = $game;
+
+        return $this;
+    }
+
+    public function getCoach(): ?Coach
+    {
+        return $this->coach;
+    }
+
+    public function setCoach(?Coach $coach): self
+    {
+        $this->coach = $coach;
 
         return $this;
     }

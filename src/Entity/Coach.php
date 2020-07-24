@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CoachRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -49,6 +51,16 @@ class Coach
      * @Gedmo\Slug(fields={"first_name","last_name"}, updatable=true)
      */
     private $slug;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Product::class, mappedBy="coach")
+     */
+    private $products;
+
+    public function __construct()
+    {
+        $this->products = new ArrayCollection();
+    }
 
     public function getSlug(): ?string
     {
@@ -104,6 +116,37 @@ class Coach
     public function setAchievements(string $achievements): self
     {
         $this->achievements = $achievements;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Product[]
+     */
+    public function getProducts(): Collection
+    {
+        return $this->products;
+    }
+
+    public function addProduct(Product $product): self
+    {
+        if (!$this->products->contains($product)) {
+            $this->products[] = $product;
+            $product->setCoach($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduct(Product $product): self
+    {
+        if ($this->products->contains($product)) {
+            $this->products->removeElement($product);
+            // set the owning side to null (unless already changed)
+            if ($product->getCoach() === $this) {
+                $product->setCoach(null);
+            }
+        }
 
         return $this;
     }

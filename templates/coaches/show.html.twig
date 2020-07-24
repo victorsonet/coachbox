@@ -28,25 +28,23 @@
     </div>
 
     <div class="d-flex justify-content-between my-4">
-        <h2 class="">Teams <span style="font-size:1.2rem;">({{ teams|length }})</span></h2>
+        {# <h2 class="">Teams <span style="font-size:1.2rem;">({{ teams|length }})</span></h2> #}
         <button class="btn btn-sm btn-secondary">Submit a coach</button>
     </div>
 
 
-
     <ul class="list-unstyled">
-        {% for team in teams %}
+        {% for product in products %}
             <li class="mb-4">
                 <div class="d-flex justify-content-center">
                     <div class="mr-2 pt-2">
                         <img src="{{asset ('images/tisha.png')}}" width="50" height="50">
                     </div>
                     <div class="mr-3 pt-2">
-                        {{ team }}
-                        <p>-- Mallory</p>
+                       <p>{{ product.type }}</p>Description - {{ product.description }} : {{ product.price }}$
                     </div>
                     <div class="vote-arrows flex-fill pt-2 js-vote-arrows" style="min-width: 90px;">
-                        <a class="vote-up" href="#" data-direction="up"><i class="far fa-arrow-alt-circle-up"></i></a>
+                        {# <a href="{{ path('product_update', {id: product.id})}}" class="btn   btn-secondary mb-3"> Product update </a> #}
                         <a class="vote-down" href="#" data-direction="down"><i class="far fa-arrow-alt-circle-down"></i></a>
                         <span><span class="js-vote-total">+ 6</span></span>
                     </div>
@@ -59,6 +57,7 @@
     <input type="hidden" name="_method" value="DELETE"/>
     <button type="submit" class="btn btn-danger">Remove coach</button>
     </form>
+    {{ form(form) }}
 </div>
 
 {% endblock %}

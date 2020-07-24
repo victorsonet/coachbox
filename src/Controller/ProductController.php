@@ -69,7 +69,7 @@ class ProductController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($product);
             $entityManager->flush();  
-            return $this->redirectToRoute('product/homepage.html.twig'); 
+            return $this->redirectToRoute('products_show'); 
         }
             return $this->render('product/create.html.twig', [
                 'form' => $form->createView(),]
@@ -90,6 +90,43 @@ class ProductController extends AbstractController
 
         return $this->redirectToRoute('products_show');
     }
+    // /**
+    //  * @Route("product/update", name="product_update")
+    //  */
+    // public function update($id, Request $request){
+    //     $em=$this->getDoctrine()->getManager();
+    //     $prdRepo=$em->getRepository(Product::class);
+    //     $products=$prdRepo->find($id);
 
+    //     if(!$products)
+    //     {
+    //         return new Response('There is no product on this id!' .$id);
+    //     }
+
+    //     $form = $this->createFormBuilder($products)
+    //         ->add('firstName', TextType::class)
+    //         ->add('lastName', TextType::class)
+    //         ->add('game', TextType::class)
+    //         ->add('achievements', TextType::class)
+    //         ->add('save', SubmitType::class, ['label' => 'Update Product'])
+    //         ->getForm();
+
+    //     $form->handleRequest($request);
+    //     if ($form->isSubmitted() && $form->isValid()) {
+    //         // $form->getData() holds the submitted values
+    //         // but, the original `$task` variable has also been updated
+    //         $products = $form->getData();
+    
+    //         // ... perform some action, such as saving the task to the database
+    //         // for example, if Task is a Doctrine entity, save it!
+    //         $entityManager = $this->getDoctrine()->getManager();
+    //         $entityManager->flush();
+        
+    
+    //         return $this->redirectToRoute('products_show', [
+    //         ]);
+        // }
+
+    // }
 
 }
