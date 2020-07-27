@@ -79,54 +79,63 @@ class ProductController extends AbstractController
     /**
      * @Route("/products-rm/{id}", name="product_delete", methods={"DELETE"})
      */
-    public function delete($id, Response $response)
+    public function delete($id)
     {
-        $em=$this->getDoctrine()->getManager();
-        $prdRepo=$em->getRepository(Product::class);
-        $product=$prdRepo->find($id);
+        $em = $this->getDoctrine()->getManager();
+
+        $prdRepo = $em->getRepository(Product::class);
+
+        $product = $prdRepo->find($id);
+        $coach = $product->getCoach();
 
         $em->remove($product);
         $em->flush();
 
-        return $this->redirectToRoute('products_show');
+        return $this->redirectToRoute('show_coach',[
+            'slug'=>$coach->getSlug()
+                    ]);
     }
-    // /**
-    //  * @Route("product/update", name="product_update")
-    //  */
-    // public function update($id, Request $request){
-    //     $em=$this->getDoctrine()->getManager();
-    //     $prdRepo=$em->getRepository(Product::class);
-    //     $products=$prdRepo->find($id);
+    /**
+     * @Route("product/update/{id}", name="product_update")
+     */
+    public function update($id, Request $request){
+        $em=$this->getDoctrine()->getManager();
+        $prdRepo=$em->getRepository(Product::class);
+        $product=$prdRepo->find($id);
+        $coach = $product->getCoach();
 
-    //     if(!$products)
-    //     {
-    //         return new Response('There is no product on this id!' .$id);
-    //     }
+        if(!$product)
+        {
+            return new Response('There is no product on this id!' .$id);
+        }
 
-    //     $form = $this->createFormBuilder($products)
-    //         ->add('firstName', TextType::class)
-    //         ->add('lastName', TextType::class)
-    //         ->add('game', TextType::class)
-    //         ->add('achievements', TextType::class)
-    //         ->add('save', SubmitType::class, ['label' => 'Update Product'])
-    //         ->getForm();
+        $form = $this->createFormBuilder($product)
+                ->add('Type', TextType::class)
+                ->add('price', IntegerType::class)
+                ->add('description', TextType::class)
+                ->add('game', TextType::class)
+                ->add('save', SubmitType::class, ['label' => 'Create Product'])
+                ->getForm();
 
-    //     $form->handleRequest($request);
-    //     if ($form->isSubmitted() && $form->isValid()) {
-    //         // $form->getData() holds the submitted values
-    //         // but, the original `$task` variable has also been updated
-    //         $products = $form->getData();
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            // $form->getData() holds the submitted values
+            // but, the original `$task` variable has also been updated
+            $product = $form->getData();
     
-    //         // ... perform some action, such as saving the task to the database
-    //         // for example, if Task is a Doctrine entity, save it!
-    //         $entityManager = $this->getDoctrine()->getManager();
-    //         $entityManager->flush();
-        
-    
-    //         return $this->redirectToRoute('products_show', [
-    //         ]);
-        // }
+            // ... perform some action, such as saving the task to the database
+            // for example, if Task is a Doctrine entity, save it!
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($product);
+            $entityManager->flush();   
 
-    // }
+            return $this->redirectToRoute('show_coach',[
+                'slug'=>$coach->getSlug()
+            ]);
+        }
+        return $this->render('product/update.html.twig', [
+            'form'=>$form->createView()]);
+    }
 
 }

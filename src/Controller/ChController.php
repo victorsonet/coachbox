@@ -19,7 +19,6 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Knp\Component\Pager\PaginatorInterface;
-
 class ChController extends AbstractController
 {
 
@@ -41,18 +40,19 @@ class ChController extends AbstractController
             ->add('save', SubmitType::class, ['label' => 'Create Product'])
             ->getForm();
 
-            $form->handleRequest($request);
-            if ($form->isSubmitted() && $form->isValid()) {
-                // $form->getData() holds the submitted values
-                // but, the original `$task` variable has also been updated
-                $product = $form->getData();
-        
-                // ... perform some action, such as saving the task to the database
-                // for example, if Task is a Doctrine entity, save it!
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($product);
-                $entityManager->flush();
-            }
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            // $form->getData() holds the submitted values
+            // but, the original `$task` variable has also been updated
+            $product = $form->getData();
+
+    
+            // ... perform some action, such as saving the task to the database
+            // for example, if Task is a Doctrine entity, save it!
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($product);
+            $entityManager->flush();
+        }
 
         if (!$coach) {
             throw $this->createNotFoundException('There is no one under this slug!' .$slug);
@@ -63,6 +63,19 @@ class ChController extends AbstractController
             'products'=>$products,
             'form' => $form->createView(),
         ]);
+    }
+
+    public function createProductForm($product)
+    {
+        $form = $this->createFormBuilder($product)
+            ->add('Type', TextType::class)
+            ->add('price', IntegerType::class)
+            ->add('description', TextType::class)
+            ->add('game', TextType::class)
+            ->add('save', SubmitType::class, ['label' => 'Create Product'])
+            ->getForm();
+
+        return $form->createView();
     }
 
     /**
@@ -188,7 +201,7 @@ class ChController extends AbstractController
         ]); 
     }
 
-    public function search(Request $request, $id)
+    public function product(Request $request, $id)
     {
 
     }
