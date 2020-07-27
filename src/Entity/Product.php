@@ -40,15 +40,15 @@ class Product
     private $description;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $game;
-
-    /**
      * @ORM\ManyToOne(targetEntity=Coach::class, inversedBy="products")
      * @ORM\JoinColumn(nullable=false)
      */
     private $coach;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Game::class, cascade={"persist", "remove"})
+     */
+    private $game;
 
     public function getId(): ?int
     {

@@ -57,9 +57,15 @@ class Coach
      */
     private $products;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Game::class, mappedBy="coaches")
+     */
+    private $games;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
+        $this->games = new ArrayCollection();
     }
 
     public function getSlug(): ?string
@@ -146,6 +152,34 @@ class Coach
             if ($product->getCoach() === $this) {
                 $product->setCoach(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Game[]
+     */
+    public function getGames(): Collection
+    {
+        return $this->games;
+    }
+
+    public function addGame(Game $game): self
+    {
+        if (!$this->games->contains($game)) {
+            $this->games[] = $game;
+            $game->addCoach($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGame(Game $game): self
+    {
+        if ($this->games->contains($game)) {
+            $this->games->removeElement($game);
+            $game->removeCoach($this);
         }
 
         return $this;
