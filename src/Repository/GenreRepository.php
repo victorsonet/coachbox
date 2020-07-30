@@ -36,15 +36,25 @@ class GenreRepository extends ServiceEntityRepository
     }
     */
 
-    /*
-    public function findOneBySomeField($value): ?Genre
+    public function findOneBySlug($slug)
     {
-        return $this->createQueryBuilder('g')
-            ->andWhere('g.exampleField = :val')
-            ->setParameter('val', $value)
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.slug = :val')
+            ->setParameter('val', $slug)
             ->getQuery()
             ->getOneOrNullResult()
         ;
     }
-    */
+
+    public function findByTerm($term)
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.game LIKE :val')
+            ->setParameter('val', '%'.$term.'%' )
+            ->orderBy('c.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+    
 }

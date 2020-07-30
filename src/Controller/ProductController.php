@@ -24,9 +24,11 @@ class ProductController extends AbstractController
         $product=$prdRepo->find($id);
 
         if (!$product) {
-            throw $this->createNotFoundException('There is no one under this id! -' .$id);
+            throw $this->createNotFoundException('There is no one under this id' .$id);
         }
+        
         return $this->render('product/show.html.twig', [
+            'id'=>$id,
             'product'=>$product,
         ]);
     }

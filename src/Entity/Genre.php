@@ -64,6 +64,12 @@ class Genre
         return $this;
     }
 
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+
     /**
      * @return Collection|Game[]
      */
