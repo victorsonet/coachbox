@@ -48,10 +48,10 @@ class GenreRepository extends ServiceEntityRepository
 
     public function findByTerm($term)
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.game LIKE :val')
+        return $this->createQueryBuilder('g')
+            ->andWhere('g.genre LIKE :val')
             ->setParameter('val', '%'.$term.'%' )
-            ->orderBy('c.id', 'ASC')
+            ->orderBy('g.id', 'ASC')
             ->getQuery()
             ->getResult()
         ;
