@@ -46,9 +46,10 @@ class Product
     private $coach;
 
     /**
-     * @ORM\OneToOne(targetEntity=Game::class, cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=Game::class, inversedBy="products")
      */
     private $game;
+
 
     public function getId(): ?int
     {
@@ -91,18 +92,6 @@ class Product
         return $this;
     }
 
-    public function getGame(): ?string
-    {
-        return $this->game;
-    }
-
-    public function setGame(string $game): self
-    {
-        $this->game = $game;
-
-        return $this;
-    }
-
     public function getCoach(): ?Coach
     {
         return $this->coach;
@@ -111,6 +100,18 @@ class Product
     public function setCoach(?Coach $coach): self
     {
         $this->coach = $coach;
+
+        return $this;
+    }
+
+    public function getGame(): ?Game
+    {
+        return $this->game;
+    }
+
+    public function setGame(?Game $game): self
+    {
+        $this->game = $game;
 
         return $this;
     }

@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Coach;
 use App\Entity\Product;
-
+use App\Entity\Game;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,6 +19,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+
 class ChController extends AbstractController
 {
 
@@ -32,11 +34,15 @@ class ChController extends AbstractController
         $product = new Product();
         $product->setCoach($coach);
 
+
         $form = $this->createFormBuilder($product)
             ->add('Type', TextType::class)
             ->add('price', IntegerType::class)
             ->add('description', TextType::class)
-            ->add('game', TextType::class)
+            ->add('game', EntityType::class, array(
+                'class' => Game::class,
+                'choice_label' => 'name'
+            ))
             ->add('save', SubmitType::class, ['label' => 'Create Product'])
             ->getForm();
 
@@ -52,6 +58,10 @@ class ChController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($product);
             $entityManager->flush();
+
+            return $this->redirectToRoute('show_coach', [
+                'slug'=>$slug
+            ]);
         }
 
         if (!$coach) {

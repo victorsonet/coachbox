@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Game;
 use App\Entity\Product;
+use App\Entity\Coach;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -10,6 +12,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+
 use Symfony\Component\Routing\Annotation\Route;
 
 class ProductController extends AbstractController
@@ -53,21 +58,32 @@ class ProductController extends AbstractController
     public function create(Request $request)
     {
         $product = new Product();
+        $em = $this->getDoctrine()->getManager();
 
         $form = $this->createFormBuilder($product)
             ->add('Type', TextType::class)
             ->add('price', IntegerType::class)
             ->add('description', TextType::class)
-            ->add('game', TextType::class)
+            ->add('game', EntityType::class, array(
+                'class' => Game::class,
+                'choice_label' => 'name'
+            ))
+            // ->add('game', TextType::class)
+            ->add('coach', EntityType::class, array(
+                'class' => Coach::class,
+                'choice_label' => 'last_name'
+            ))
             ->add('save', SubmitType::class, ['label' => 'Create Product'])
             ->getForm();
+
+            
 
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
                 // $form->getData() holds the submitted values
                 // but, the original `$task` variable has also been updated
                 $product = $form->getData();
-            
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($product);
             $entityManager->flush();  
