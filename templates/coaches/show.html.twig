@@ -44,7 +44,7 @@
                        <p>{{ product.type }}</p>Description - {{ product.description }} : {{ product.price }}$
                        <p>{{ product.game.name }}
                     </div>
-                    <div class="vote-arrows flex-fill pt-2 js-vote-arrows" style="min-width: 90px;">
+                    <div class="flex-fill pt-2" style="min-width: 90px;">
                     <form action="{{ path('product_delete', { id: product.id }) }}" method="POST" >
                         <input type="hidden" name="_method" value="DELETE"/>
                         <button type="submit" class="btn btn-outline-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
