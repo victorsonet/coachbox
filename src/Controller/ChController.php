@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Coach;
 use App\Entity\Product;
 use App\Entity\Game;
+use App\Entity\Genre;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,6 +14,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use App\Repository\CoachRepository;
+use App\Repository\GameRepository;
+use App\Repository\GenreRepository;
 use App\Repository\ProductRepository;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -155,6 +158,7 @@ class ChController extends AbstractController
         $en=$this->getDoctrine()->getManager();
         $coachrepo=$en->getRepository(Coach::class);
         
+        
         if ($term)
         {
             $coaches = $coachrepo->findByTerm($term);  
@@ -211,9 +215,20 @@ class ChController extends AbstractController
         ]); 
     }
 
-    public function product(Request $request, $id)
+    /**
+     * @Route("/browse", name="browse")
+     */
+    public function search(CoachRepository $coachrepo, GenreRepository $genreRepo, GameRepository $gamerepo)
     {
+        $coaches = $coachrepo->findAll();
+        $genres = $genreRepo->findAll();
+        $games = $gamerepo->findAll();
 
+        return $this->render('coaches/search.html.twig', [
+            'coaches' => $coaches,
+            'genres' => $genres,
+            'games' => $games
+        ]);
     }
 }   
 

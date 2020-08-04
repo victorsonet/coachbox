@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-4">
+    <p>Coaches</p>
+    {% for coach in coaches %}
+        <a class="q-title" href="{{ path('show_coach', { slug: coach.slug }) }}">{{ coach.firstName }} {{ coach.lastName }}</a>
+        <br>
+    {% else %}
+        We couldn't find a coach!
+    {% endfor %}
+    </div>
+    <div class="col-lg-4">
+    <p>Genres</p>
+    {% for genre in genres %}
+        <a class="q-title" href="{{ path('genre_show', { slug: genre.slug }) }}">{{ genre.name }}</a>
+        <br>
+    {% else %}
+        We couldn't find a coach!
+    {% endfor %}
+    </div>
+    <div class="col-lg-4">
+    <p>Games</p>      
+    {% for game in games %}
+        <a class="q-title" href="{{ path('show_game', { slug: game.slug }) }}">{{ game.name }}</a>
+        <br>
+    {% else %}
+        We couldn't find a coach!
+    {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}

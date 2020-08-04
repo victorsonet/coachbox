@@ -11,7 +11,7 @@
                             <img src="{{ asset ('images/magic-photo.png') }}" width="100" height="100">
                         </div>
                         <div class="col">
-                           <a class="q-title" href="{{ path ('show_genres') }}"><h2>{{ genre.name }}</h2></a>
+                           <a class="q-title" href="{{ path ('genre_show', {slug: genre.slug}) }}"><h2>{{ genre.name }}</h2></a>
                             <div class="q-display p-3">
                                 <i class="fa fa-quote-left mr-3"></i>
                                 <p class="d-inline">Top3</p>
@@ -24,5 +24,7 @@
                         <i class="fa fa-magic magic-wand"></i> 15 comments
                     </p>
                 </a>#}
+    {% else %}
+    <h1> We couldn't find a genre! </h1>
     {% endfor %}
 {% endblock %}

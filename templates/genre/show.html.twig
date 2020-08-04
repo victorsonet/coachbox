@@ -14,7 +14,15 @@
                             <img src="{{asset ('images/tisha.png')}}" width="100" height="100">
                         </div>
                         <div class="col">
-                            <h1 class="q-title-show">{{ genre.name }}</h1>
+                            <h1 class="q-title-show d-inline">{{ genre.name }}</h1>
+                                <form class="d-inline" action="{{ path('genre_delete', { id: genre.id }) }}" method="POST" >
+                                <input type="hidden" name="_method" value="DELETE"/>
+                                <button type="submit" class="btn btn-outline-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
+                                </form>
+                                <a class="btn btn-outline-primary btn-sm" href="{{ path ('genre_update', { id: genre.id }) }}">
+                                <i class="fas fa-pen"></i>
+                                </a>
+                            </h1>
                             <div class="q-display p-3">
                                 <i class="fa fa-quote-left mr-3"></i>
                             </div>

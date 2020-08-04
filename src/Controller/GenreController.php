@@ -67,7 +67,7 @@ class GenreController extends AbstractController
     }
 
     /**
-     * @Route("/genres/{slug}")
+     * @Route("/genres/{slug}", name="genre_show")
      */
     public function show($slug, GenreRepository $genreRepository)
     {
