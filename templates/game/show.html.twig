@@ -24,4 +24,8 @@
             </div>
         </div>
     </div>
+    {% for genre in game.genres %}
+    <p> {{ genre.name }} </p>
+    {% else %} <h1> Nothing </h1>
+    {% endfor %}
 {% endblock %}

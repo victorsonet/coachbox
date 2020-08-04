@@ -41,6 +41,8 @@ class GameRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('c')
             ->andWhere('c.slug = :val')
+            // ->leftJoin('c.genres', 'g')
+            // ->addSelect('g')
             ->setParameter('val', $slug)
             ->getQuery()
             ->getOneOrNullResult()
@@ -57,5 +59,4 @@ class GameRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
-    
 }

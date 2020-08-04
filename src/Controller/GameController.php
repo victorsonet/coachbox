@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Game;
 use App\Entity\Genre;
 use App\Repository\GameRepository;
+use App\Repository\GenreRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -44,9 +45,10 @@ class GameController extends AbstractController
     /**
      * @Route("/game/{slug}", name="show_game")
      */
-    public function show_one($slug, GameRepository $gameRepository)
+    public function show_one($slug, GameRepository $gameRepository, GenreRepository $genreRepo)
     {
-        $game=$gameRepository->findOneBySlug($slug);
+        
+        $game = $gameRepository->findOneBySlug($slug);
 
         if (!$game) {
             throw $this->createNotFoundException('There is no one under this slug!' .$slug);
