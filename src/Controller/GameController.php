@@ -103,7 +103,7 @@ class GameController extends AbstractController
     }
 
     /**
-     * @Route("games/delete/{id}", methods={"DELETE"})
+     * @Route("games/delete/{id}", name="delete_game", methods={"DELETE"})
      */
     public function delete($id, GameRepository $gameRepository)
     {
@@ -117,7 +117,7 @@ class GameController extends AbstractController
     }
 
     /**
-     * @Route("games/update/{id}")
+     * @Route("games/update/{id}", name="update_game")
      */
     public function update($id, GameRepository $gameRepository, Request $request)
     {
@@ -126,6 +126,12 @@ class GameController extends AbstractController
 
         $form = $this->createFormBuilder($game)
         ->add('name', TextType::class)
+        ->add('genres', EntityType::class, array (
+            'class' => Genre::class,
+            'choice_label' => 'name',
+            'multiple' => true,
+            'expanded' => true
+        ))
         ->add('save', SubmitType::class, ['label' => 'Update game'])
         ->getForm();
 
@@ -137,7 +143,9 @@ class GameController extends AbstractController
             $entityManager->persist($game);
             $entityManager->flush();
 
-            return $this->redirectToRoute('show_all_games');
+            return $this->redirectToRoute('show_game', [
+                'slug'=>$game->getSlug()
+            ]);
         }
         return $this->render('game/update.html.twig', [
             'form'=>$form->createView()
