@@ -39,7 +39,7 @@ class Genre
     private $slug;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Game::class, inversedBy="genres")
+     * @ORM\ManyToMany(targetEntity=Game::class, mappedBy="genres")
      */
     private $games;
 
@@ -68,7 +68,6 @@ class Genre
     {
         return $this->slug;
     }
-
 
     /**
      * @return Collection|Game[]

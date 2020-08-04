@@ -63,10 +63,17 @@ class GameController extends AbstractController
      */
     public function reg(Request $request)
     {
+
         $game = new Game();
 
         $form = $this->createFormBuilder($game)
             ->add('name', TextType::class)
+            ->add('genres', EntityType::class, array (
+                'class' => Genre::class,
+                'choice_label' => 'name',
+                'multiple' => true,
+                'expanded' => true
+            ))
             ->add('save', SubmitType::class, ['label' => 'Create Game'])
             ->getForm();
 

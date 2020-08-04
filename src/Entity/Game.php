@@ -38,7 +38,7 @@ class Game
     private $slug;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Genre::class, mappedBy="games")
+     * @ORM\ManyToMany(targetEntity=Genre::class, inversedBy="games")
      */
     private $genres;
 

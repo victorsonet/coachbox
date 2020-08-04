@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Game;
 use App\Entity\Genre;
+use App\Repository\GameRepository;
 use App\Repository\GenreRepository;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -10,6 +12,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Routing\Annotation\Route;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+
 
 class GenreController extends AbstractController
 {
@@ -69,9 +73,11 @@ class GenreController extends AbstractController
     /**
      * @Route("/genres/{slug}", name="genre_show")
      */
-    public function show($slug, GenreRepository $genreRepository)
+    public function show($slug, GenreRepository $genreRepository, GameRepository $gameRepository)
     {
-        $genre=$genreRepository->findOneBySlug($slug);
+        $genre = $genreRepository->findOneBySlug($slug);
+        $games = $genre->getGames(); 
+
 
         if (!$genre) {
             throw $this->createNotFoundException('There is no one under this slug!' .$slug);
@@ -79,6 +85,7 @@ class GenreController extends AbstractController
 
         return $this->render('genre/show.html.twig', [
             'genre'=>$genre,
+            'games'=>$games
         ]);
     }
 
