@@ -59,4 +59,13 @@ class GameRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+    public function findByLimit($limit)
+    {
+        return $this->createQueryBuilder('j')
+        ->add ('orderBy', 'j.ordered ASC')
+        ->setMaxResults($limit)
+        ->getQuery()
+        ->getResult();
+    }
 }

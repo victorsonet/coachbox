@@ -24,6 +24,7 @@
             </div>
         </div>
     </div>
+    <h4>Genres</h4>
     {% for genre in game.genres %}
     <p> {{ genre.name }} </p>
     {% else %} <h1> Nothing </h1>
@@ -33,4 +34,13 @@
             <input type="hidden" name="_method" value="DELETE"/>
             <button type="submit" class="btn btn-danger">Remove game</button>
     </form>
+
+    <div class="mt-5">
+    <h4>Coaches</h4>
+    {% for coach in game.coaches %}
+    <p>{{ coach.firstName }} </p>
+        {% for product in coach.products %}
+        <p> {{ product.type }} </p> 
+        {% endfor %}
+    {% endfor %}
 {% endblock %}

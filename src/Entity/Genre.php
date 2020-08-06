@@ -43,6 +43,11 @@ class Genre
      */
     private $games;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $ordered;
+
     public function __construct()
     {
         $this->games = new ArrayCollection();
@@ -91,6 +96,18 @@ class Genre
         if ($this->games->contains($game)) {
             $this->games->removeElement($game);
         }
+
+        return $this;
+    }
+
+    public function getOrdered(): ?int
+    {
+        return $this->ordered;
+    }
+
+    public function setOrdered(int $ordered): self
+    {
+        $this->ordered = $ordered;
 
         return $this;
     }

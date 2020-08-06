@@ -43,7 +43,7 @@ class Game
     private $genres;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Coach::class, inversedBy="games")
+     * @ORM\ManyToMany(targetEntity=Coach::class, mappedBy="games")
      */
     private $coaches;
 
@@ -51,6 +51,11 @@ class Game
      * @ORM\OneToMany(targetEntity=Product::class, mappedBy="game")
      */
     private $products;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $ordered;
 
     public function __construct()
     {
@@ -162,6 +167,18 @@ class Game
                 $product->setGame(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getOrdered(): ?int
+    {
+        return $this->ordered;
+    }
+
+    public function setOrdered(int $ordered): self
+    {
+        $this->ordered = $ordered;
 
         return $this;
     }

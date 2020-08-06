@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Coach;
 use App\Entity\Game;
 use App\Entity\Genre;
+use App\Repository\CoachRepository;
 use App\Repository\GameRepository;
 use App\Repository\GenreRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -45,17 +47,18 @@ class GameController extends AbstractController
     /**
      * @Route("/game/{slug}", name="show_game")
      */
-    public function show_one($slug, GameRepository $gameRepository, GenreRepository $genreRepo)
+    public function show_one($slug, GameRepository $gameRepository, GenreRepository $genreRepo, CoachRepository $coachRepository)
     {
-        
         $game = $gameRepository->findOneBySlug($slug);
+        $coaches = $game->getCoaches();
+        $products = $game->getProducts();
 
         if (!$game) {
             throw $this->createNotFoundException('There is no one under this slug!' .$slug);
         }
 
         return $this->render('game/show.html.twig', [
-            'game'=>$game, 
+            'game'=>$game,
         ]);
     }
 
@@ -91,7 +94,7 @@ class GameController extends AbstractController
                 $entityManager->flush();
         
                 return $this->redirectToRoute('show_game', [
-                    'slug'=>$game->getSlug() 
+                    'slug'=>$game->getSlug(),
                ]);
             }
 

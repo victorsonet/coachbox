@@ -6,6 +6,7 @@ use App\Entity\Coach;
 use App\Entity\Product;
 use App\Entity\Game;
 use App\Entity\Genre;
+use App\Entity\Review;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,6 +24,9 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\RadioType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class ChController extends AbstractController
 {
@@ -36,7 +40,35 @@ class ChController extends AbstractController
         $products = $coach->getProducts();
         $product = new Product();
         $product->setCoach($coach);
+        $review = new Review();
+        $review->setCoach($coach);
 
+        $reviewform = $this->createFormBuilder($review)
+            ->add('stars', ChoiceType::class, 
+                [
+                'choices' => [
+                '1' => 1,
+                '2' => 2,
+                '3' => 3,
+                '4' => 4,
+                '5' => 5,
+                ]])
+                ->add('description', TextareaType::class)
+                ->add('save', SubmitType::class, ['label' => 'Submit Review'])
+                ->getForm();
+
+        $reviewform->handleRequest($request);
+        if ($reviewform->isSubmitted() && $reviewform->isValid()) {
+            // $form->getData() holds the submitted values
+            // but, the original `$task` variable has also been updated
+            $review = $reviewform->getData();
+    
+            // ... perform some action, such as saving the task to the database
+            // for example, if Task is a Doctrine entity, save it!
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($review);
+            $entityManager->flush();
+        }
 
         $form = $this->createFormBuilder($product)
             ->add('Type', TextType::class)
@@ -75,6 +107,7 @@ class ChController extends AbstractController
             'coach'=>$coach, 
             'products'=>$products,
             'form' => $form->createView(),
+            'reviewform' => $reviewform->createView()
         ]);
     }
 
@@ -107,7 +140,12 @@ class ChController extends AbstractController
         $form = $this->createFormBuilder($coach)
             ->add('firstName', TextType::class)
             ->add('lastName', TextType::class)
-            ->add('game', TextType::class)
+            ->add('games', EntityType::class, array (
+                'class' => Game::class,
+                'choice_label' => 'name',
+                'multiple' => true,
+                'expanded' => true
+            ))
             ->add('achievements', TextType::class)
             ->add('save', SubmitType::class, ['label' => 'Update Coach'])
             ->getForm();
@@ -157,8 +195,8 @@ class ChController extends AbstractController
         $term = $request->query->get('term');
         $en=$this->getDoctrine()->getManager();
         $coachrepo=$en->getRepository(Coach::class);
-        
-        
+        $limit = $request->query->getInt('limit', 10);
+
         if ($term)
         {
             $coaches = $coachrepo->findByTerm($term);  
@@ -169,13 +207,13 @@ class ChController extends AbstractController
         $pagination = $paginator->paginate(
             $coaches, /* query NOT result */
             $request->query->getInt('page', 1), /*page number*/
-            10 /*limit per page*/);
+            $limit /*limit per page*/);
         
         return $this->render('coaches/homepage.html.twig', [
             'coachlist' => $coaches,
             'term' => $term,
             'pagination' => $pagination,
-        ]);
+            ]);
     }
 
     /**
@@ -188,7 +226,12 @@ class ChController extends AbstractController
         $form = $this->createFormBuilder($coach)
             ->add('firstName', TextType::class)
             ->add('lastName', TextType::class)
-            ->add('game', TextType::class)
+            ->add('games', EntityType::class, array (
+                'class' => Game::class,
+                'choice_label' => 'name',
+                'multiple' => true,
+                'expanded' => true
+            ))
             ->add('achievements', TextType::class)
             ->add('save', SubmitType::class, ['label' => 'Create Task'])
             ->getForm();
@@ -206,9 +249,9 @@ class ChController extends AbstractController
                 $entityManager->flush();
         
                 return $this->redirectToRoute('show_coach', [
-                    'slug'=>$coach->getSlug() 
-               ]);
-            }
+                    'slug'=>$coach->getSlug(),
+                    ]);
+                }
 
         return $this->render('coaches/signup.html.twig', [
             'form' => $form->createView(),
@@ -220,9 +263,15 @@ class ChController extends AbstractController
      */
     public function search(CoachRepository $coachrepo, GenreRepository $genreRepo, GameRepository $gamerepo)
     {
-        $coaches = $coachrepo->findAll();
-        $genres = $genreRepo->findAll();
-        $games = $gamerepo->findAll();
+        
+
+        $coaches = $coachrepo->findByLimit(5);
+
+        $genres = $genreRepo->findByLimit(5);
+
+        $games = $gamerepo->findByLimit(5);
+
+
 
         return $this->render('coaches/search.html.twig', [
             'coaches' => $coaches,

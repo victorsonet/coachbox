@@ -39,7 +39,8 @@
                         <img src="{{asset ('images/tisha.png')}}" width="50" height="50">
                     </div>
                     <div class="mr-3 pt-2">
-                       <p>{{ game.name }}</p>
+                        <a class="" href="{{ path ('show_game', { slug: game.slug }) }}">
+                        <p>{{ game.name }}</p>
                     </div>
                     {# <div class="vote-arrows flex-fill pt-2 js-vote-arrows" style="min-width: 90px;">
                     <form action="{{ path('product_delete', { id: product.id }) }}" method="POST" >

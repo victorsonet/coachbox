@@ -19,7 +19,7 @@
         <a class="q-title" href="{{ path('genre_show', { slug: genre.slug }) }}">{{ genre.name }}</a>
         <br>
     {% else %}
-        We couldn't find a coach!
+        We couldn't find a genre!
     {% endfor %}
     </div>
     <div class="col-lg-4">
@@ -28,7 +28,7 @@
         <a class="q-title" href="{{ path('show_game', { slug: game.slug }) }}">{{ game.name }}</a>
         <br>
     {% else %}
-        We couldn't find a coach!
+        We couldn't find a game!
     {% endfor %}
     </div>
   </div>

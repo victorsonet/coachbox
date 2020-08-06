@@ -18,7 +18,11 @@
                             <div class="q-display p-3">
                                 <i class="fa fa-quote-left mr-3"></i>
                                 <p class="d-inline">{{ coach.achievements }}</p>
-                                <p class="pt-4"><strong>{{ coach.game }}</strong></p>
+                                
+                                {% for game in coach.games %}
+                                <p class="pt-4"><strong>{{ game.name }} </strong></p>
+                                {% endfor %}
+                                
                             </div>
                         </div>
                     </div>
@@ -72,6 +76,12 @@
         <input type="hidden" name="_method" value="DELETE"/>
         <button type="submit" class="btn btn-danger">Remove coach</button>
     </form>
+    <div class="mt-5">
+        <h5> Review </h5>
+        <div class="card card-body">
+            {{ form(reviewform) }}
+        </div>
+    </div>
 
 
 

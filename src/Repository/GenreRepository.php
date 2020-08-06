@@ -57,4 +57,12 @@ class GenreRepository extends ServiceEntityRepository
         ;
     }
     
+    public function findByLimit($limit)
+    {
+        return $this->createQueryBuilder('g')
+        ->add ('orderBy', 'g.ordered ASC')
+        ->setMaxResults($limit)
+        ->getQuery()
+        ->getResult();
+    }
 }

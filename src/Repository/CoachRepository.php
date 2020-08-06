@@ -34,6 +34,15 @@ class CoachRepository extends ServiceEntityRepository
         ;
     }
 
+    public function findByLimit($limit)
+    {
+        return $this->createQueryBuilder('c')
+        ->add('orderBy', 'c.ordered ASC')
+        ->setMaxResults( $limit )
+        ->getQuery()
+        ->getResult()
+        ;
+    }
     
     public function findOneBySlug($slug)
     {
@@ -44,5 +53,6 @@ class CoachRepository extends ServiceEntityRepository
             ->getOneOrNullResult()
         ;
     }
+
     
 }

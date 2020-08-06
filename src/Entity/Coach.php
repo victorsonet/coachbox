@@ -39,11 +39,6 @@ class Coach
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $game;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
     private $achievements;
 
     /**
@@ -58,14 +53,25 @@ class Coach
     private $products;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Game::class, mappedBy="coaches")
+     * @ORM\ManyToMany(targetEntity=Game::class, inversedBy="coaches")
      */
     private $games;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $ordered;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Review::class, mappedBy="coach")
+     */
+    private $reviews;
 
     public function __construct()
     {
         $this->products = new ArrayCollection();
         $this->games = new ArrayCollection();
+        $this->reviews = new ArrayCollection();
     }
 
     public function getSlug(): ?string
@@ -98,18 +104,6 @@ class Coach
     public function setLastName(string $last_name): self
     {
         $this->last_name = $last_name;
-
-        return $this;
-    }
-
-    public function getGame(): ?string
-    {
-        return $this->game;
-    }
-
-    public function setGame(string $game): self
-    {
-        $this->game = $game;
 
         return $this;
     }
@@ -180,6 +174,49 @@ class Coach
         if ($this->games->contains($game)) {
             $this->games->removeElement($game);
             $game->removeCoach($this);
+        }
+
+        return $this;
+    }
+
+    public function getOrdered(): ?int
+    {
+        return $this->ordered;
+    }
+
+    public function setOrdered(int $ordered): self
+    {
+        $this->ordered = $ordered;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Review[]
+     */
+    public function getReviews(): Collection
+    {
+        return $this->reviews;
+    }
+
+    public function addReview(Review $review): self
+    {
+        if (!$this->reviews->contains($review)) {
+            $this->reviews[] = $review;
+            $review->setCoach($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReview(Review $review): self
+    {
+        if ($this->reviews->contains($review)) {
+            $this->reviews->removeElement($review);
+            // set the owning side to null (unless already changed)
+            if ($review->getCoach() === $this) {
+                $review->setCoach(null);
+            }
         }
 
         return $this;
