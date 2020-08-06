@@ -131,7 +131,10 @@ class ProductController extends AbstractController
                 ->add('Type', TextType::class)
                 ->add('price', IntegerType::class)
                 ->add('description', TextType::class)
-                ->add('game', TextType::class)
+                ->add('game', EntityType::class, array(
+                    'class' => Game::class,
+                    'choice_label' => 'name'
+                ))
                 ->add('save', SubmitType::class, ['label' => 'Create Product'])
                 ->getForm();
 
