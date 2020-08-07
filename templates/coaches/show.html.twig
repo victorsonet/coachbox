@@ -82,8 +82,16 @@
             {{ form(reviewform) }}
         </div>
     </div>
-
-
+    <div class="mt-5">
+        {% for reviewitem in reviewitems %}
+            <div class="card card-body"
+                <li>
+                <h5> Stars: {{ reviewitem.stars }} </h5>
+                    <p> Description: {{ reviewitem.description }} </p>
+                </li>
+            </div>
+        {% endfor %}
+    </div>
 
 </div>
 

@@ -5,27 +5,21 @@ namespace App\Controller;
 use App\Entity\Coach;
 use App\Entity\Product;
 use App\Entity\Game;
-use App\Entity\Genre;
 use App\Entity\Review;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 use App\Repository\CoachRepository;
 use App\Repository\GameRepository;
 use App\Repository\GenreRepository;
 use App\Repository\ProductRepository;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\RadioType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class ChController extends AbstractController
@@ -42,6 +36,7 @@ class ChController extends AbstractController
         $product->setCoach($coach);
         $review = new Review();
         $review->setCoach($coach);
+        $reviewitems = $coach->getReviews();
 
         $reviewform = $this->createFormBuilder($review)
             ->add('stars', ChoiceType::class, 
@@ -104,6 +99,7 @@ class ChController extends AbstractController
         }
 
         return $this->render('coaches/show.html.twig', [
+            'reviewitems'=>$reviewitems,
             'coach'=>$coach, 
             'products'=>$products,
             'form' => $form->createView(),
