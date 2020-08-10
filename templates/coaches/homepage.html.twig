@@ -27,7 +27,13 @@
                 <div class="card h-100">
                 <img src="{{ asset ('images/magic-photo.png') }}" class="card-img-top" alt="...">
                 <div class="card-body">
-                    <h5 class="card-title text-uppercase">{{ coach.firstName }} {{ coach.lastName }}</h5>
+                    <h5 class="card-title text-uppercase">{{ coach.firstName }} {{ coach.lastName }}
+                    {% if coach.reviews|length %}
+                    {{ (coach.reviews|map(r => r.stars)|reduce((carry, v) => carry + v) / coach.reviews|length) | round(1, 'floor')}}
+                    {% else %}
+                    No reviews
+                    {% endif %}
+                    </h5>
                     <p class="card-text">{{ coach.achievements }}</p>
                     <p> Games: 
                     {% for game in coach.games %}
