@@ -15,7 +15,11 @@
                         </div>
                         <div class="col">
                             <h1 class="q-title-show">{{ coach.firstName }} {{ coach.lastName }} {{ reviewavg.avg | round(1, 'floor') }}</h1>
-                            {{ (reviewitems|map(r => r.stars)|reduce((carry, v) => carry + v) / reviewitems|length) | round(1, 'floor')}}
+                            {% if reviewitems is empty %}
+                            No reviews
+                            {% else %}
+                            Review: {{ (reviewitems|map(r => r.stars)|reduce((carry, v) => carry + v) / reviewitems|length) | round(1, 'floor')}}
+                            {% endif %}
                             <div class="q-display p-3">
                                 <i class="fa fa-quote-left mr-3"></i>
                                 <p class="d-inline">{{ coach.achievements }}</p>
