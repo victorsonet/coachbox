@@ -9,13 +9,15 @@
         <p class="lead">Even those who you didnt think were available!</p>
     </div>
 </div>
-<div class="container">
-    <div class="row mb-3">
-        <div class="col">
-            <button class="btn btn-question">Get a coach!</button>
+    <div class="container">
+        <div class="row mb-3">
+            <div class="col">
+                <button class="btn btn-question">Get a coach!</button>
+            </div>
+            <div>
+                <a class="btn btn-dark" href="{{ path('coach_reg') }}">Create a coach!</a>
+            </div>
         </div>
-    </div>
-    <div>
         <form method="get" action="{{ path('show_coaches') }}">
             <input type="search" name="term" value="{{ term }}"/>
         </form>

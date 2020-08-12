@@ -31,7 +31,24 @@
                     <a class="nav-link" href="#">About</a>
                 </li>
             </div>
-          <a class="btn btn-dark" href="{{ path('coach_reg') }}">Sign up</a>
+            {% if is_granted("ROLE_USER") %}
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{ app.user.username }}
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{{ path ('user_profile', {slug: app.user.username}) }}">Profile</a>
+                    <a class="dropdown-item" href="">Settings</a>
+                    </li>
+                </ul>
+                <a class="btn btn-dark" href="{{ path('app_logout') }}">Logout</a>
+            </div>
+            {% else %}
+                <div class="btn-group" role="group">
+                    <a class="btn btn-dark" href="{{ path('app_register') }}">Sign up</a>
+                    <a class="btn btn-primary" href="{{ path('app_login') }}">Login</a>
+            {% endif %}
         </nav>
 
         {% block body %}{% endblock %}

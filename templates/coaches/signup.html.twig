@@ -1,5 +1,24 @@
 {% extends 'base.html.twig' %}
 {% block title %} Sign up {% endblock %}
 {% block body %}
-{{ form(form) }}
+{{ form_start(form) }}
+    <div class="row">
+        <div class="col">
+            {{ form_row(form.firstName, {'attr': {'class': 'form-control'}}) }}
+        </div class="col">
+        <div class="col">
+            {{ form_row(form.lastName, {'attr': {'class': 'form-control'}}) }}
+        </div class="col">
+        </div class="row">
+        <div class="row">
+        <div class="col">
+            {{ form_label(form.games) }}
+            {{ form_widget(form.games) }}
+        </div class="col">
+        <div class="col">
+            {{ form_row(form.achievements, {'attr': {'class': 'form-control'}}) }}
+        </div class="col">
+        </div class="row">
+            {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
+{{ form_end(form) }}
 {% endblock %}

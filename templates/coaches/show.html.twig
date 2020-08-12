@@ -36,12 +36,6 @@
         </div>
     </div>
 
-    <div class="d-flex justify-content-between my-4">
-        {# <h2 class="">Teams <span style="font-size:1.2rem;">({{ teams|length }})</span></h2> #}
-        <button class="btn btn-sm btn-secondary">Submit a coach</button>
-    </div>
-
-
     <ul class="list-unstyled">
         {% for product in products %}
             <li class="mb-4">
@@ -66,6 +60,7 @@
             </li>
         {% endfor %}
     </ul>
+    {% if is_granted("ROLE_USER") %}
     <p>
         <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
         Create product
@@ -81,10 +76,20 @@
         <input type="hidden" name="_method" value="DELETE"/>
         <button type="submit" class="btn btn-danger">Remove coach</button>
     </form>
+    {% endif %}
+
     <div class="mt-5">
         <h5> Review </h5>
         <div class="card card-body">
-            {{ form(reviewform) }}
+            {{ form_start(reviewform) }}
+            {{ form_row(reviewform.stars) }}
+            {{ form_row(reviewform.description, {'attr': {'class': 'form-control'}}) }}
+            <div class="row">
+                <div class="col">
+            {{ form_widget(reviewform.save, {'attr': {'class': 'btn btn-primary'}}) }}
+                </div>
+            </div class="row">
+            {{ form_end(reviewform) }}
         </div>
     </div>
     <div class="mt-5">

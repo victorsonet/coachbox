@@ -219,9 +219,12 @@ class ChController extends AbstractController
     /**
      * @Route("/signup", name="coach_reg")
      */
-    public function reg(Request $request)
+    public function reg(Request $request, GameRepository $gamerepo)
     {
         $coach = new Coach();
+        $games = $gamerepo->findAll();
+        $user = $this->getUser();
+        $coach->setUser($user);
 
         $form = $this->createFormBuilder($coach)
             ->add('firstName', TextType::class)
@@ -233,7 +236,7 @@ class ChController extends AbstractController
                 'expanded' => true
             ))
             ->add('achievements', TextType::class)
-            ->add('save', SubmitType::class, ['label' => 'Create Task'])
+            ->add('save', SubmitType::class, ['label' => 'Create Coach!'])
             ->getForm();
 
             $form->handleRequest($request);
@@ -255,6 +258,7 @@ class ChController extends AbstractController
 
         return $this->render('coaches/signup.html.twig', [
             'form' => $form->createView(),
+            'games' => $games
         ]); 
     }
 

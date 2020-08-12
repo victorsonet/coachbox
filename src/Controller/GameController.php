@@ -63,7 +63,7 @@ class GameController extends AbstractController
     }
 
     /**
-     * @Route("/games/create")
+     * @Route("/games/create", name="game_create")
      */
     public function reg(Request $request)
     {

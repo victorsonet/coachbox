@@ -67,6 +67,11 @@ class Coach
      */
     private $reviews;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="coaches")
+     */
+    private $user;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
@@ -218,6 +223,18 @@ class Coach
                 $review->setCoach(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
