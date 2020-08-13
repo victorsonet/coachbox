@@ -95,8 +95,7 @@ class GameController extends AbstractController
                 $entityManager->persist($game);
                 $entityManager->flush();
         
-                return $this->redirectToRoute('show_game', [
-                    'slug'=>$game->getSlug(),
+                return $this->redirectToRoute('coach_reg', [
                ]);
             }
 

@@ -14,11 +14,12 @@
         <div class="col">
             {{ form_label(form.games) }}
             {{ form_widget(form.games) }}
+            <a class="btn btn-dark" href="{{ path('game_create') }}">Add a new game</a>
         </div class="col">
         <div class="col">
             {{ form_row(form.achievements, {'attr': {'class': 'form-control'}}) }}
+            <div class="float-right">{{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}</div>
         </div class="col">
         </div class="row">
-            {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
 {{ form_end(form) }}
 {% endblock %}

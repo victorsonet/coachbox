@@ -10,11 +10,10 @@
     <h1 class="h3 mb-3 font-weight-normal">Register</h1>
 
     {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.username,{'attr': {'class': 'form-control'}}) }}</p>
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password', 'attr': {'class': 'form-control'}
-        }) }}
-        {{ form_row(registrationForm.email, {'attr': {'class': 'form-control'}}) }}
+        {{ form_row(registrationForm.username,{'attr': {'class': 'form-control','placeholder':'Enter your username'}}) }}</p>
+        <p>{{ form_row(registrationForm.plainPassword.first,{'attr': {'class': 'form-control', 'placeholder':'Enter your password'}}) }}</p>
+        <p>{{ form_row(registrationForm.plainPassword.second,{'attr': {'class': 'form-control', 'placeholder':'Retype your password'}}) }}</p>
+        {{ form_row(registrationForm.email, {'attr': {'class': 'form-control', 'placeholder':'Enter your email'}}) }}
         {{ form_label(registrationForm.agreeTerms) }}
         {{ form_widget(registrationForm.agreeTerms) }}
         
