@@ -1,8 +1,10 @@
 {% extends ('base.html.twig') %}
 
 {% block title %} User settings {% endblock %}
-
 {% block body %}
+{% if app.user.username != user.username and is_granted('IS_AUTHENTICATED_FULLY') %}
+Permission Denied!
+{% else %}
 <div class="row">
 {{ form_start(form) }}
 <div class="col">
@@ -16,4 +18,7 @@
     <p>{{ form_row(form.plainPassword.second,{'attr': {'class': 'form-control', 'placeholder':'Retype new Password'}}) }}</p>
     {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
 {{ form_end(form) }}
+
+{% endif %}
 {% endblock %}
+

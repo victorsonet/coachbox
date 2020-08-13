@@ -17,6 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Component\Validator\Constraints\Length;
@@ -76,6 +77,7 @@ class UserController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $user = $userrepo->findOneBySlug($slug);
+        // dump($user->getUsername());exit;
 
         $form=$this->createFormBuilder($user)
         ->add('email', EmailType::class,[
@@ -118,7 +120,8 @@ class UserController extends AbstractController
         }
 
         return $this->render('/user/settings.html.twig',[
-            'form'=>$form->createView()
+            'form'=>$form->createView(),
+            'user'=>$user
         ]);
     }
 }
