@@ -29,10 +29,12 @@
     <p> {{ genre.name }} </p>
     {% else %} <h1> Nothing </h1>
     {% endfor %}
+    {% if is_granted("ROLE_USER") %}
             <a href="{{ path('update_game', {id: game.id})}}" class="btn btn-secondary mb-3"> Update game </a>
             <form action="{{ path('delete_game', { id: game.id }) }}" method="POST" >
             <input type="hidden" name="_method" value="DELETE"/>
             <button type="submit" class="btn btn-danger">Remove game</button>
+    {% endif %}
     </form>
 
     <div class="mt-5">

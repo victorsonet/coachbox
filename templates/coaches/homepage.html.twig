@@ -19,21 +19,21 @@
             </div>
         </div>
         <form method="get" action="{{ path('show_coaches') }}">
-            <input type="search" name="term" value="{{ term }}"/>
+            <input type="search" name="term" value="{{ term }}" placeholder="Search"/>
         </form>
     </div>
     <div class="row row-cols-1 row-cols-md-3">
 
         {% for coach in pagination %}
             <div class="col mb-4">
-                <div class="card h-100">
+                <div class="card" style="width: 18rem;">
                 <img src="{{ asset ('images/magic-photo.png') }}" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title text-uppercase">{{ coach.firstName }} {{ coach.lastName }}
                     {% if coach.reviews|length %}
-                    {{ (coach.reviews|map(r => r.stars)|reduce((carry, v) => carry + v) / coach.reviews|length) | round(1, 'floor')}}
+                    <h5>{{ (coach.reviews|map(r => r.stars)|reduce((carry, v) => carry + v) / coach.reviews|length) | round(1, 'floor')}}</h5>
                     {% else %}
-                    No reviews
+                    <h5>No reviews</h5>
                     {% endif %}
                     </h5>
                     <p class="card-text">{{ coach.achievements }}</p>

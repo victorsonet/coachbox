@@ -42,4 +42,7 @@ security:
          - { path: ^/admin, roles: ROLE_ADMIN }
          - { path: ^/profile, roles: ROLE_USER }
          - { path: ^/ch-edit, roles: ROLE_USER }
+         - { path: ^/ch-remove, roles: ROLE_USER }
+         - { path: ^/games/create, roles: ROLE_USER }
+         - { path: ^/game/delete/, roles: ROLE_ADMIN }
          

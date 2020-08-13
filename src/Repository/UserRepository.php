@@ -71,6 +71,6 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->andWhere('u.username = :val')
             ->setParameter('val', $slug)
             ->getQuery()
-            ->getResult();
+            ->getOneOrNullResult();
     }
 }
