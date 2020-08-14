@@ -1,7 +1,25 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-{{ users.username }}
-Email: {{ users.email }}
-Id: {{ users.id }}
+    <div class="card text-center">
+        <div class="card-header">
+            Profile
+        </div>
+        <div class="card-body">
+            <h5 class="card-title font-weight-bold">{{ user.username }}</h5>
+            <p class="card-text">
+            <p>Email: {{ user.email }}</p>
+            <p>Id: {{ user.id }}</p>
+            </p>
+        </div>
+    </div>
+
+    {% for coach in coaches %}
+        {% for game in coach.games %}
+            {% if coach.user == user %}
+                    {{ coach.firstName }} {{ coach.lastName }} 
+                    {{ game.name }}            
+            {% endif %}   
+        {% endfor %}
+    {% endfor %}
 {% endblock %}

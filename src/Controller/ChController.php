@@ -15,6 +15,7 @@ use App\Repository\GameRepository;
 use App\Repository\GenreRepository;
 use App\Repository\ProductRepository;
 use App\Repository\ReviewRepository;
+use App\Repository\UserRepository;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -29,7 +30,7 @@ class ChController extends AbstractController
     /**
      * @Route("/ch/{slug}", name="show_coach")
      */
-    public function show_id($slug,ReviewRepository $reviewRepository, CoachRepository $coachRepository, ProductRepository $productRepository,Request $request)
+    public function show_id($slug,ReviewRepository $reviewRepository, CoachRepository $coachRepository, ProductRepository $productRepository,Request $request, UserRepository $userrepo)
     {
         $coach = $coachRepository->findOneBySlug($slug);
         $products = $coach->getProducts();
@@ -39,6 +40,7 @@ class ChController extends AbstractController
         $review->setCoach($coach);
         $reviewitems = $coach->getReviews();
         $reviewavg = $reviewRepository->getAvg($coach->getId());
+
         // dump($reviewavg['avg']);exit;
 
         $reviewform = $this->createFormBuilder($review)

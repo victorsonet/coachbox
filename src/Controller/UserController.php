@@ -6,6 +6,7 @@ use App\Entity\Coach;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Repository\CoachRepository;
+use App\Repository\GameRepository;
 use App\Security\LoginFormAuthenticator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -53,11 +54,12 @@ class UserController extends AbstractController
     /**
      * @Route("/user/{slug}", name="user_profile")
      */
-    public function userprofile($slug, UserRepository $userrepo, Request $request, CoachRepository $coachrepo)
+    public function userprofile($slug, UserRepository $userrepo, Request $request, CoachRepository $coachrepo, GameRepository $gamerepo)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $userrepo->findOneBySlug($slug);
-        // dump($user);exit;
+        $coaches = $coachrepo->findAll();
+        $games = $gamerepo->findAll();
 
         if(!$user)
         {
@@ -66,14 +68,16 @@ class UserController extends AbstractController
 
         return $this->render('user/profile.html.twig',[
             'slug' => $slug,
-            'users' => $user,
+            'user' => $user,
+            'coaches'=>$coaches,
+            'games'=>$games
         ]);
     }
 
     /**
      * @Route("/user/{slug}/settings", name="user_settings")
      */
-    public function usersettings($slug, UserRepository $userrepo, UserPasswordEncoderInterface $passwordEncoder, Request $request, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator )
+    public function usersettings($slug, UserRepository $userrepo, CoachRepository $coachrepo, UserPasswordEncoderInterface $passwordEncoder, Request $request, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator )
     {
         $em = $this->getDoctrine()->getManager();
         $user = $userrepo->findOneBySlug($slug);
