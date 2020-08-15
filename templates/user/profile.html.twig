@@ -3,22 +3,28 @@
 {% block body %}
     <div class="card text-center">
         <div class="card-header">
-            Profile
+            <i class="icomoon icon-profile"></i>Profile
         </div>
         <div class="card-body">
             <h5 class="card-title font-weight-bold">{{ user.username }}</h5>
             <p class="card-text">
-            <p>Email: {{ user.email }}</p>
-            <p>Id: {{ user.id }}</p>
-            </p>
+            <p><i class="fa fa-envelope"></i> {{ user.email }}</p>
         </div>
     </div>
 
     {% for coach in coaches %}
         {% for game in coach.games %}
-            {% if coach.user == user %}
-                    {{ coach.firstName }} {{ coach.lastName }} 
-                    {{ game.name }}            
+            {% if coach.user == user %} 
+                <div class="card float-left" style="width:20rem;margin:20px 0 24px 0">
+                    <img class="card-img-top" src="/images/img_avatar3.png" alt="image" style="width:100%;height:50%">
+                        <div class="card-body">
+                            <h4 class="card-title text-center">{{ coach.firstName }} {{ coach.lastName }}</h4>
+                            <p class="card-text text-center">{{ game.name }} </p>
+                                <div class="card-footer text-center">
+                                    <a href="{{ path('show_coach', { slug: coach.slug }) }}" class="btn btn-primary">See Profile</a>
+                                </div>
+                        </div>
+                </div>
             {% endif %}   
         {% endfor %}
     {% endfor %}

@@ -27,7 +27,7 @@
     <h4>Genres</h4>
     {% for genre in game.genres %}
     <p> {{ genre.name }} </p>
-    {% else %} <h1> Nothing </h1>
+    {% else %} <h5> No genre set! </h5>
     {% endfor %}
     {% if is_granted("ROLE_USER") %}
             <a href="{{ path('update_game', {id: game.id})}}" class="btn btn-secondary mb-3"> Update game </a>
@@ -40,7 +40,7 @@
     <div class="mt-5">
     <h4>Coaches</h4>
     {% for coach in game.coaches %}
-    <p>{{ coach.firstName }} </p>
+    <p>{{ coach.firstName }} {{ coach.lastName }} </p>
         {% for product in coach.products %}
         <p> {{ product.type }} </p> 
         {% endfor %}
