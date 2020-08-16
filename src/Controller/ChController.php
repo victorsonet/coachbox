@@ -40,6 +40,7 @@ class ChController extends AbstractController
         $review->setCoach($coach);
         $reviewitems = $coach->getReviews();
         $reviewavg = $reviewRepository->getAvg($coach->getId());
+        $user = $coach->getUser();
 
         // dump($reviewavg['avg']);exit;
 
@@ -104,6 +105,7 @@ class ChController extends AbstractController
         }
 
         return $this->render('coaches/show.html.twig', [
+            'user'=>$user,
             'reviewavg'=>$reviewavg,
             'reviewitems'=>$reviewitems,
             'coach'=>$coach, 
