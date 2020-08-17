@@ -11,10 +11,13 @@
                 <div class="q-container-show p-4">
                     <div class="row">
                         <div class="col-2 text-center">
-                            <img src="{{asset ('images/tisha.png')}}" width="100" height="100">
+                            <img src="{{asset ('images/img_avatar3.png')}}" width="100" height="100">
                         </div>
                         <div class="col">
-                            <h1 class="q-title-show">{{ coach.firstName }} {{ coach.lastName }} - {{ reviewavg.avg | round(1, 'floor') }}</h1>
+                            <h1 class="q-title-show">{{ coach.firstName }} {{ coach.lastName }} {% if (reviewavg.avg | round(1, 'floor')) == 0 %}
+                            {% else %}
+                            - {{ reviewavg.avg | round(1, 'floor') }}
+                            {% endif %}</h1>
                             {% if reviewitems is empty %}
                             No reviews
                             {% else %}
@@ -60,7 +63,7 @@
             </li>
         {% endfor %}
     </ul>
-    {% if is_granted("ROLE_USER") and user.id == app.user.id %}
+    {% if is_granted("ROLE_COACH") and user.id == app.user.id %}
     <p>
         <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
         Create product
@@ -78,6 +81,8 @@
     </form>
     {% endif %}
 
+    {% if is_granted("ROLE_COACH") %}
+    {% else %}
     <div class="mt-5">
         <h5> Review </h5>
         <div class="card card-body">
@@ -92,6 +97,7 @@
             {{ form_end(reviewform) }}
         </div>
     </div>
+    {% endif %}
     <div class="mt-5">
         {% for reviewitem in reviewitems %}
             <div class="card card-body"

@@ -3,12 +3,12 @@
 {% block body %}
     <div class="card text-center">
         <div class="card-header">
-            <i class="icomoon icon-profile"></i>Profile
+            <i class="fas fa-user-circle mr-2"></i>Profile
         </div>
         <div class="card-body">
             <h5 class="card-title font-weight-bold">{{ user.username }}</h5>
             <p class="card-text">
-            <p><i class="fa fa-envelope"></i> {{ user.email }}</p>
+            <p><i class="fa fa-envelope mr-2"></i>{{ user.email }}</p>
         </div>
     </div>
 
@@ -28,4 +28,6 @@
             {% endif %}   
         {% endfor %}
     {% endfor %}
+    <a class="btn btn-dark float-right" href="{{ path('coach_reg') }}">Create a coach!</a>
+
 {% endblock %}

@@ -229,6 +229,16 @@ class ChController extends AbstractController
         $games = $gamerepo->findAll();
         $user = $this->getUser();
         $coach->setUser($user);
+        $roles = $user->getRoles();
+        array_push ($roles, 'ROLE_COACH');
+        // dump($roles);exit;
+        
+        if (!$this->isGranted('ROLE_COACH', $user))
+        {
+            // dump($roles);exit;
+            $user->setRoles($roles);
+            dump($user->getRoles());exit;
+        }
 
         $form = $this->createFormBuilder($coach)
             ->add('firstName', TextType::class)
