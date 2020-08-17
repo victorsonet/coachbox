@@ -54,5 +54,24 @@ class CoachRepository extends ServiceEntityRepository
         ;
     }
 
-    
+    public function findByUserId($id)
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.user = :val')
+            ->setParameter('val', $id)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function deleteByUserId($id)
+    {
+        return $this->createQueryBuilder('c')
+            ->delete('Coach, c')
+            ->andWhere('c.id = :val')
+            ->setParameter('val', $id)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 }

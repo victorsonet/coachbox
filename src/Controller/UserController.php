@@ -128,4 +128,17 @@ class UserController extends AbstractController
             'user'=>$user
         ]);
     }
+
+    /**
+     * @Route("/user/{slug}/delete", name="user_delete")
+     */
+    function userdelete($slug, UserRepository $userrepo, CoachRepository $coachrepo)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $user = $userrepo->findOneBySlug($slug);
+        $id = $user->getId();
+        // $coaches = $coachrepo->findByUserId($id);        
+
+        return new Response('csa');
+    }
 }
