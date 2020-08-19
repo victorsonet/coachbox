@@ -5,20 +5,20 @@
 {% if app.user.username != user.username and is_granted('IS_AUTHENTICATED_FULLY') %}
 Permission Denied!
 {% else %}
-<div class="row">
+<div class="container center_div">
 {{ form_start(form) }}
-<div class="col">
-{{ form_label(form.email )}}
+    <div style="text-align: center;">
+        <i class="fa fa-envelope mr-2"></i> 
+        {{ app.user.email }}
+    </div>
 
-<p>{{ app.user.email }}</p>
-</div>
-</div>
-    {{ form_widget(form.email,{'attr': {'class': 'form-control', 'placeholder':'Enter new email'}}) }}
-    <p>{{ form_row(form.plainPassword.first,{'attr': {'class': 'form-control', 'placeholder':'Enter new password'}}) }}</p>
-    <p>{{ form_row(form.plainPassword.second,{'attr': {'class': 'form-control', 'placeholder':'Retype new password'}}) }}</p>
+    {{ form_label(form.email) }}
+    {{ form_widget(form.email,{'attr': {'class': 'form-control'}}) }}
+    <p>{{ form_row(form.plainPassword.first,{'attr': {'class': 'form-control'}}) }}</p>
+    <p>{{ form_row(form.plainPassword.second,{'attr': {'class': 'form-control'}}) }}</p>
     {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
 {{ form_end(form) }}
-
+</div>
 {% endif %}
 {% endblock %}
 
