@@ -11,14 +11,21 @@
 </div>
     <div class="container">
         <form method="get" action="{{ path('show_coaches') }}">
+        <div class="input-group">
             <input type="search" name="term" value="{{ term }}" placeholder="Search"/>
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="submit">Go</button>
         </form>
+            </div>
+        </div>
+        <br>
     </div>
-    <div class="row row-cols-1 row-cols-md-3">
-
+    {# <div class="row row-cols-1 row-cols-md-3"> #}
+    <div class="container">
+          <div class="row justify-content-md-center">
         {% for coach in pagination %}
-            <div class="col mb-4">
-                <div class="card" style="width: 18rem;">
+            <div class="col-lg-4">
+                <div class="card">
                 <img src="{{ asset ('images/img_avatar3.png') }}" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title text-uppercase">{{ coach.firstName }} {{ coach.lastName }}
@@ -41,6 +48,9 @@
                 </div>
             </div>
         {% endfor %}
+    {# </div> #}
+        </div>
+        </div>
     </div>
         {{ knp_pagination_render(pagination) }}
 </div>

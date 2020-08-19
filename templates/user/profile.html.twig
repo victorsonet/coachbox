@@ -13,9 +13,12 @@
             <h5 class="card-title font-weight-bold">{{ user.username }}</h5>
             <p class="card-text">
             <p><i class="fa fa-envelope mr-2"></i>{{ user.email }}</p>
+            <a class="btn btn-sm btn-dark" href="{{ path('coach_reg') }}">Create a coach!</a>
+
         </div>
     </div>
 
+    <div class="container">
     {% for coach in coaches %}
         {% for game in coach.games %}
             {% if coach.user == user %} 
@@ -32,6 +35,6 @@
             {% endif %}   
         {% endfor %}
     {% endfor %}
-    <a class="btn btn-dark float-right" href="{{ path('coach_reg') }}">Create a coach!</a>
+    </div>
 
 {% endblock %}
