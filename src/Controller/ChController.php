@@ -237,7 +237,6 @@ class ChController extends AbstractController
         {
             // dump($roles);exit;
             $user->setRoles($roles);
-            dump($user->getRoles());exit;
         }
 
         $form = $this->createFormBuilder($coach)

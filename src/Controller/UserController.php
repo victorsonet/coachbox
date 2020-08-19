@@ -136,9 +136,15 @@ class UserController extends AbstractController
     {
         $entityManager = $this->getDoctrine()->getManager();
         $user = $userrepo->findOneBySlug($slug);
-        $id = $user->getId();
-        // $coaches = $coachrepo->findByUserId($id);        
 
-        return new Response('csa');
+        $id = $user->getId();
+        $coaches = $coachrepo->findByUserId($id);
+
+        $entityManager->remove($user);
+        $entityManager->flush();
+
+        // $user->setUsername(null);
+
+        return $this->redirectToRoute('show_coaches');
     }
 }

@@ -50,6 +50,7 @@
                        <p>{{ product.type }}</p>Description - {{ product.description }} : {{ product.price }}$
                        <p>{{ product.game.name }}
                     </div>
+                    {% if is_granted("ROLE_COACH") and user.id == app.user.id %}
                     <div class="flex-fill pt-2" style="min-width: 90px;">
                     <form action="{{ path('product_delete', { id: product.id }) }}" method="POST" >
                         <input type="hidden" name="_method" value="DELETE"/>
@@ -59,6 +60,7 @@
                             <i class="fas fa-pen"></i>
                             </a>
                     </div>
+                    {% endif %}
                 </div>
             </li>
         {% endfor %}

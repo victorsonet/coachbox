@@ -3,7 +3,11 @@
 {% block body %}
     <div class="card text-center">
         <div class="card-header">
-            <i class="fas fa-user-circle mr-2"></i>Profile
+            <i class="fas fa-user-circle mr-2"></i>Profile 
+            <form action="{{ path('user_delete', { slug: app.user.username }) }}" method="POST" >
+                <input type="hidden" name="_method" value="DELETE"/>
+                <button type="submit" class="btn btn-outline-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
+             </form>
         </div>
         <div class="card-body">
             <h5 class="card-title font-weight-bold">{{ user.username }}</h5>

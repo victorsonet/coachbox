@@ -68,7 +68,8 @@ class Coach
     private $reviews;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="coaches")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="coaches", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="SET NULL")
      */
     private $user;
 
