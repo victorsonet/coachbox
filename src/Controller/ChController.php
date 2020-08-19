@@ -280,15 +280,11 @@ class ChController extends AbstractController
      */
     public function search(CoachRepository $coachrepo, GenreRepository $genreRepo, GameRepository $gamerepo)
     {
-        
+        $coaches = $coachrepo->findByLimit(10);
 
-        $coaches = $coachrepo->findByLimit(5);
+        $genres = $genreRepo->findByLimit(10);
 
-        $genres = $genreRepo->findByLimit(5);
-
-        $games = $gamerepo->findByLimit(5);
-
-
+        $games = $gamerepo->findByLimit(10);
 
         return $this->render('coaches/search.html.twig', [
             'coaches' => $coaches,

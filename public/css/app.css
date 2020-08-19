@@ -142,3 +142,8 @@ footer {
     width:80% /* value of your choice which suits your alignment */
 }
 
+.boxhead a {
+    color: #000000;
+    text-decoration: none;
+}
+
