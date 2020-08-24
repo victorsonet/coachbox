@@ -42,15 +42,6 @@
                         <a class="" href="{{ path ('show_game', { slug: game.slug }) }}">
                         <p>{{ game.name }}</p>
                     </div>
-                    {# <div class="vote-arrows flex-fill pt-2 js-vote-arrows" style="min-width: 90px;">
-                    <form action="{{ path('product_delete', { id: product.id }) }}" method="POST" >
-                        <input type="hidden" name="_method" value="DELETE"/>
-                        <button type="submit" class="btn btn-outline-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
-                    </form>
-                            <a class="btn btn-outline-primary btn-sm" href="{{ path ('product_update', { id: product.id }) }}">
-                            <i class="fas fa-pen"></i>
-                            </a>
-                    </div> #}
                 </div>
             </li>
         {% endfor %}

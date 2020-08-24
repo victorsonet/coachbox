@@ -25,18 +25,13 @@
                         <div class="col">
                            <a class="q-title" href="{{ path('show_product', {id: product.id}) }}"><h2>{{ product.type }} - {{ product.price }}$</h2></a>
                             <div class="q-display p-3">
-                                <i class="fa fa-quote-left mr-3"></i>
                                 <p class="d-inline">{{ product.description }}</p>
-                                <p class="pt-4"><strong>{{ product.game }}</strong></p>
+                                <p class="pt-4">{{ product.game.name }}</p>
+                                {# <p class="pt-4"><strong>{{ product.game }}</strong></p> #}
                             </div>
                         </div>
                     </div>
                 </div>
-                {#<a class="answer-link" href="{{ path('product_show', { slug: coach.slug }) }}" style="color: #fff;">
-                    <p class="q-display-response text-center p-3">
-                        <i class="fa fa-magic magic-wand"></i> 15 comments
-                    </p>
-                </a>#}
             </div>
         {% endfor %}
 {% endblock %}
