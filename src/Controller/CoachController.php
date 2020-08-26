@@ -9,7 +9,7 @@ class CoachController extends AbstractController
 {
 
     /**
-     * @Route("coaches/{slug}", name="app_team_show")
+     * @Route("coach/{slug}", name="app_team_show")
      */
 
     public function show($slug)

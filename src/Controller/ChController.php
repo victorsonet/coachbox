@@ -192,9 +192,9 @@ class ChController extends AbstractController
     }
 
     /**
-     * @Route("/", name="show_coaches")
+     * @Route("/coaches", name="show_coaches")
      */
-    public function index(Request $request, PaginatorInterface $paginator)
+    public function coaches(Request $request, PaginatorInterface $paginator)
     {
         $term = $request->query->get('term');
         $en=$this->getDoctrine()->getManager();
@@ -290,6 +290,19 @@ class ChController extends AbstractController
             'coaches' => $coaches,
             'genres' => $genres,
             'games' => $games
+        ]);
+    }
+
+    /**
+     * @Route("/", name="homepage")
+     */
+    public function index(CoachRepository $coachrepo)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $topcoaches = $coachrepo->findByLimit(3);
+
+        return $this->render('coaches/mainindex.html.twig', [
+            'topcoaches'=>$topcoaches
         ]);
     }
 }   

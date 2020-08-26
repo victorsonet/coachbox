@@ -1,0 +1,136 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<div class="intro-section" id="home-section">
+      
+      <div class="slide-1" style="background-image: url('images/hero_1.jpg');" data-stellar-background-ratio="0.5">
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-12">
+              <div class="row align-items-center">
+                <div class="col-lg-6 mb-4">
+                  <h1>Learn From The Expert</h1>
+                  <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime ipsa nulla sed quis rerum amet natus quas necessitatibus.</p>
+                </div>
+
+                <div class="col-lg-5 ml-auto" data-aos="fade-up" data-aos-delay="500">
+                  <form action="" method="post" class="form-box">
+                    <h3 class="h4 text-black mb-4">Sign Up</h3>
+                    <div class="form-group">
+                      <input type="text" class="form-control" placeholder="Email Addresss">
+                    </div>
+                    <div class="form-group">
+                      <input type="password" class="form-control" placeholder="Password">
+                    </div>
+                    <div class="form-group mb-4">
+                      <input type="password" class="form-control" placeholder="Re-type Password">
+                    </div>
+                    <div class="form-group">
+                      <input type="submit" class="btn btn-primary btn-pill" value="Sign up">
+                    </div>
+                  </form>
+
+                </div>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+
+<div class="service-section" style="margin-top:1.3rem;">
+    <div class="container">
+            <div class="row mbr-justify-content-center">
+                <div class="col-lg-6 mbr-col-md-10">
+                    <div class="wrap">
+                        <div class="ico-wrap">
+                            <span class="mbr-iconfont fa-calendar fa"></span>
+                        </div>
+                        <div class="text-wrap vcenter">
+                            <h2 class="mbr-fonts-style mbr-bold mbr-section-title3 display-5">Create
+                                <span>The Plan</span>
+                            </h2>
+                            <p class="mbr-fonts-style text1 mbr-text display-6">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 mbr-col-md-10">
+                    <div class="wrap">
+                        <div class="ico-wrap">
+                            <span class="mbr-iconfont fa-globe fa"></span>
+                        </div>
+                        <div class="text-wrap vcenter">
+                            <h2 class="mbr-fonts-style mbr-bold mbr-section-title3 display-5">Launch
+                                <span>A Unique Project</span>
+                            </h2>
+                            <p class="mbr-fonts-style text1 mbr-text display-6">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 mbr-col-md-10">
+                    <div class="wrap">
+                        <div class="ico-wrap">
+                            <span class="mbr-iconfont fa-trophy fa"></span>
+                        </div>
+                        <div class="text-wrap vcenter">
+                            <h2 class="mbr-fonts-style mbr-bold mbr-section-title3 display-5">Achieve <span>Your Goals</span></h2>
+                            <p class="mbr-fonts-style text1 mbr-text display-6">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 mbr-col-md-10">
+                    <div class="wrap">
+                        <div class="ico-wrap">
+                            <span class="mbr-iconfont fa-volume-up fa"></span>
+                        </div>
+                        <div class="text-wrap vcenter">
+                            <h2 class="mbr-fonts-style mbr-bold mbr-section-title3 display-5">Become <span>Successful</span></h2>
+                            <p class="mbr-fonts-style text1 mbr-text display-6">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>
+
+<div class="coach-section">
+    <div class="container">
+        <h1 class="heading">Meet Our Coaches</h1>
+        <div class="row justify-content-md-center">
+        {% for coach in topcoaches %}
+            <div class="col-lg-4">
+            <div class="card">
+                    <img src="{{ asset ('images/cardbg.jpg') }}" alt="card backgroud" class="card-img ">
+                    <img src="{{ asset ('images/img_avatar3.png') }}" alt="profile image" class="profile-img mx-auto d-block">
+                    <h1 style="text-align:center;">{{ coach.firstName }} {{ coach.lastName }}</h1>
+                    <p class="job-title" style="text-align:center;">Coach</p>
+                    <p class="about" style="text-align:center;">{{ coach.achievements }}</p>
+                    <a href="{{ path ('show_coach', {slug: coach.slug}) }}" class="btn btn-primary">Profile</a>
+                    <ul class="social-media">
+                        <li><a href="#"><i class="fab fa-facebook-square"></i></a></li>
+                        <li><a href="#"><i class="fab fa-twitter-square"></i></a></li>
+                        <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                        <li><a href="#"><i class="fab fa-google-plus-square"></i></a></li>
+                    </ul>
+            </div>
+            </div>
+        {% endfor %}
+        </div>
+        </div>
+    </div>
+</div>
+
+
+
+<section class="newsletter-section">
+<div class="container">
+<div class="row">
+<div class="col-sm-12">
+	
+</div>
+</div>
+</div>
+</section>
+{% endblock %}
