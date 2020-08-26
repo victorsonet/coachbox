@@ -50,6 +50,11 @@ class Product
      */
     private $game;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $ordered;
+
 
     public function getId(): ?int
     {
@@ -112,6 +117,18 @@ class Product
     public function setGame(?Game $game): self
     {
         $this->game = $game;
+
+        return $this;
+    }
+
+    public function getOrdered(): ?int
+    {
+        return $this->ordered;
+    }
+
+    public function setOrdered(?int $ordered): self
+    {
+        $this->ordered = $ordered;
 
         return $this;
     }

@@ -34,4 +34,14 @@ class ReviewRepository extends ServiceEntityRepository
         ;
     }
 
+    public function findByLimit($limit)
+    {
+        return $this->createQueryBuilder('p')
+        ->add('orderBy', 'p.ordered ASC')
+        ->setMaxResults( $limit )
+        ->getQuery()
+        ->getResult()
+        ;
+    }
+
     }

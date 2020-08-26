@@ -3,27 +3,42 @@
 {% block title %} Genres {% endblock %}
 
 {% block body %}
-    
     <div class="container">
-    <div class="row">
-    {% for genre in pagination %}
-        <div class="col-lg-4">
-        <figure class="figure">
-        <a class="" style="text-decoration:none; color: #444; font-family:spartan; font-style:normal;font-weight: 400;" 
-        href="{{ path ('genre_show', {slug: genre.slug}) }}"><img src="{{ asset ('images/diamond.png') }}" width="80" height="80">
-        <br>
-        <figcaption class="figure-caption text-center">{{ genre.name }}</a></figcaption>
-        </figure>
+        <div class="row">
+            {% for genre in pagination %}
+                <div class="col-lg-4">
+                    <div class="card" style="width: 22rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ genre.name }}</h5>
+                            <p class="card-text">Lorem Ipsum</p>
+                            <a class="btn btn-primary" href="{{ path ('genre_show', {slug: genre.slug}) }}">View</a>
+                            <div class="dropdown d-inline-flex">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Best Products
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                {% for genregame in genre.games %}
+                                    {% for product in productrank %}
+                                        {% if genregame.name == product.game.name %}
+                                    {# {% if product.name != genre.name %}  #}
+                                        {# No items to show! #}
+                                    {# {% else %} #}
+                                        <a class="dropdown-item" href="{{ path ('show_product', {id: product.id})}}">
+                                            {{ product.coach.firstName }} - {{ product.game.name }}
+                                        </a>
+                                    {# {% endif %} #}
+                                        {% else %}
+                                            {% endif %}
+                                    {% endfor %}
+                                {% endfor %}
+                                </div>    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <h1> We couldn't find a genre! </h1>
+            {% endfor %}
         </div>
-            
-                {#<a class="answer-link" href="{{ path('product_show', { slug: coach.slug }) }}" style="color: #fff;">
-                    <p class="q-display-response text-center p-3">
-                        <i class="fa fa-magic magic-wand"></i> 15 comments
-                    </p>
-                </a>#}
-    {% else %}
-        <h1> We couldn't find a genre! </h1>
-    {% endfor %}
-    </div>
     </div>
 {% endblock %}

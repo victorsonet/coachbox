@@ -6,6 +6,7 @@ use App\Entity\Game;
 use App\Entity\Genre;
 use App\Repository\GameRepository;
 use App\Repository\GenreRepository;
+use App\Repository\ProductRepository;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -47,7 +48,7 @@ class GenreController extends AbstractController
     /**
      * @Route("/genres", name="show_genres")
      */
-    public function index(GenreRepository $genreRepository, Request $request, PaginatorInterface $paginator)
+    public function index(GenreRepository $genreRepository, Request $request, PaginatorInterface $paginator, ProductRepository $productRepository)
     {
         $term = $request->query->get('term');
 
@@ -57,13 +58,19 @@ class GenreController extends AbstractController
             $genres = $genreRepository->findAll();
         }
 
+        $productrank = $productRepository->findByLimit(5);
+        // $productgame = $productrank->getGame();
+
         $pagination = $paginator->paginate(
             $genres, /* query NOT result */
             $request->query->getInt('page', 1), /*page number*/
             10 /*limit per page*/
         );
 
+        // dump($productgame);exit;
+
         return $this->render('genre/index.html.twig', [
+            'productrank'=>$productrank,
             'genres'=>$genres,
             'pagination'=>$pagination,
             'term'=>$term
