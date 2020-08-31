@@ -2,57 +2,40 @@
 
 
 {% block body %}
-</div>
-<div class="jumbotron-img jumbotron jumbotron-fluid">
+    {# <div class="row row-cols-1 row-cols-md-3"> #}
+    <div class="coach-section">
     <div class="container">
-        <h1 class="display-4">Find your coach</h1>
-        <p class="lead">Even those who you didnt think were available!</p>
-    </div>
-</div>
-    <div class="container">
+        <div class="row" style="margin-left:32px">
         <form method="get" action="{{ path('show_coaches') }}">
-        <div class="input-group">
-            <input type="search" name="term" value="{{ term }}" placeholder="Search"/>
+        <div class="input-group" >
+            <input type="search" name="term" value="{{ term }}" placeholder="Search" style="font-size:15px;"/>
             <div class="input-group-append">
                 <button class="btn btn-primary" type="submit">Go</button>
-        </form>
             </div>
         </div>
-        <br>
-    </div>
-    {# <div class="row row-cols-1 row-cols-md-3"> #}
-    <div class="container">
-          <div class="row justify-content-md-center">
+        </form>
+        </div>
+        <div class="row justify-content-md-center">
         {% for coach in pagination %}
             <div class="col-lg-4">
                 <div class="card">
-                <img src="{{ asset ('images/img_avatar3.png') }}" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title text-uppercase">{{ coach.firstName }} {{ coach.lastName }}
-                    {% if coach.reviews|length %}
+                <img src="{{ asset ('images/cardbg.jpg') }}" alt="card backgroud" class="card-img ">
+                <img src="{{ asset ('images/img_avatar3.png') }}" alt="profile image" class="profile-img mx-auto d-block">
+                <h1 style="text-align:center;">{{ coach.firstName }} {{ coach.lastName }}</h1>
+                <p class="job-title" style="text-align:center;">Coach</p>
+                <p class="about" style="text-align:center;">{{ coach.achievements }}</p>
+                {% if coach.reviews|length %}
                     <h5>{{ (coach.reviews|map(r => r.stars)|reduce((carry, v) => carry + v) / coach.reviews|length) | round(1, 'floor')}}</h5>
-                    {% else %}
-                    <h5>No reviews</h5>
-                    {% endif %}
-                    </h5>
-                    <p class="card-text">{{ coach.achievements }}</p>
-                    <p> Games: 
-                    {% for game in coach.games %}
-                    <strong> {{ game.name }} </strong>
-                    {% else %}
-                    None
-                    {% endfor %}
-                    </p>
-                    <a href="{{ path('show_coach', { slug: coach.slug }) }}" class="btn btn-block btn-primary">View</a>
-                </div>
+                {% else %}
+                <p style="text-align:center;font-size:12px;">No reviews</p>
+                {% endif %}
+                <a href="{{ path ('show_coach', {slug: coach.slug}) }}" class="btn btn-primary">Profile</a>
                 </div>
             </div>
         {% endfor %}
-    {# </div> #}
-        </div>
         </div>
     </div>
         {{ knp_pagination_render(pagination) }}
-</div>
+    </div>
 {% endblock %}
 

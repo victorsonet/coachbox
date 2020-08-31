@@ -15,8 +15,33 @@
                 </div>
 
                 <div class="col-lg-5 ml-auto" data-aos="fade-up" data-aos-delay="500">
-                  <form action="" method="post" class="form-box">
+                <div class="form-box">
+                <div class="form-group ">
+                  {{ form_start(registrationForm) }}
+                </div>
                     <h3 class="h4 text-black mb-4">Sign Up</h3>
+                  <div class="form-group">
+                  {{ form_widget(registrationForm.username,{'attr': {'class': 'form-control','placeholder':'Username'}}) }}</p>
+                  </div>
+                    <div class="form-group">
+                    <p>{{ form_widget(registrationForm.plainPassword.first,{'attr': {'class': 'form-control', 'placeholder':'Password'}}) }}</p>
+                    </div>
+                    <div class="form-group">
+                    <p>{{ form_widget(registrationForm.plainPassword.second,{'attr': {'class': 'form-control', 'placeholder':'Retype Password'}}) }}</p>
+                    </div>
+                  <div class="form-group">
+                  {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control', 'placeholder':'Email adress'}}) }}
+                  </div>
+                    <div>
+                      <button class="btn btn-lg btn-primary" type="submit">Sign Up</button>
+                    </div>
+                  {{ form_end(registrationForm) }}
+                  </div>
+                  {# <form action="" method="post" class="form-box">
+                    <h3 class="h4 text-black mb-4">Sign Up</h3>
+                    <div class="form-group">
+                      <input type="text" class="form-control" placeholder="Username">
+                    </div>
                     <div class="form-group">
                       <input type="text" class="form-control" placeholder="Email Addresss">
                     </div>
@@ -29,7 +54,7 @@
                     <div class="form-group">
                       <input type="submit" class="btn btn-primary btn-pill" value="Sign up">
                     </div>
-                  </form>
+                  </form> #}
 
                 </div>
               </div>
@@ -39,6 +64,11 @@
         </div>
       </div>
     </div>
+
+    <br>
+    <br>
+    <br>
+    <hr class="container">
 
 <div class="service-section" style="margin-top:1.3rem;">
     <div class="container">
@@ -50,7 +80,7 @@
                         </div>
                         <div class="text-wrap vcenter">
                             <h2 class="mbr-fonts-style mbr-bold mbr-section-title3 display-5">Create
-                                <span>The Plan</span>
+                                <span>A Plan</span>
                             </h2>
                             <p class="mbr-fonts-style text1 mbr-text display-6">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum</p>
                         </div>
@@ -94,6 +124,8 @@
             </div>
     </div>
 </div>
+
+<hr class="container">
 
 <div class="coach-section">
     <div class="container">

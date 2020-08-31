@@ -6,6 +6,7 @@ use App\Entity\Coach;
 use App\Entity\Product;
 use App\Entity\Game;
 use App\Entity\Review;
+use App\Entity\User;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,6 +24,11 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
+use App\Form\RegistrationFormType;
+use App\Security\LoginFormAuthenticator;
+
 
 class ChController extends AbstractController
 {
@@ -296,14 +302,43 @@ class ChController extends AbstractController
     /**
      * @Route("/", name="homepage")
      */
-    public function index(CoachRepository $coachrepo)
+    public function index(CoachRepository $coachrepo,Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator)
     {
-        $em = $this->getDoctrine()->getManager();
+        $user = new User();
+        $form = $this->createForm(RegistrationFormType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // encode the plain password
+            $user->setPassword(
+                $passwordEncoder->encodePassword(
+                    $user,
+                    $form->get('plainPassword')->getData()
+                )
+            );
+
+            $user->setRoles(array('ROLE_USER'));
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+            // do anything else you need here, like send an email
+
+            return $guardHandler->authenticateUserAndHandleSuccess(
+                $user,
+                $request,
+                $authenticator,
+                'main' // firewall name in security.yaml
+            );
+
+            return $this->redirectToRoute('app_login');
+        }
+
         $topcoaches = $coachrepo->findByLimit(3);
 
         return $this->render('coaches/mainindex.html.twig', [
-            'topcoaches'=>$topcoaches
+            'topcoaches'=>$topcoaches,
+            'registrationForm' => $form->createView(),
         ]);
-    }
+    }    
 }   
 

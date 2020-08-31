@@ -14,7 +14,11 @@
     </head>
     <body style="min-height:100%; position:relative; padding-bottom:25%;">
         <nav class="navbar navbar-light bg-light navbar-expand-lg" style="height: 100px;">
+          {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
           <a class="navbar-brand" href="{{ path ('show_coaches') }}">
+          {% else %}
+          <a class="navbar-brand" href="{{ path ('homepage') }}">
+          {% endif %}
             <p class="pl-2 d-inline font-weight-bold" style="color: #444;">Coachbox</p>
           </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
