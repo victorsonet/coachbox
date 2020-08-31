@@ -102,6 +102,7 @@
     justify-content: space-evenly;
     padding: 2rem, 0;
     margin-top: 1rem;
+    padding-left:0;
 }
 
     .coach-section .social-media i{
@@ -319,7 +320,7 @@ position: relative; }
     border-radius: 7px; }
 
 .verticalLine {
-    border-left: thick solid black;
+    border-left: 1px solid #cdcfd1;
     }
 
 .vertical-center {

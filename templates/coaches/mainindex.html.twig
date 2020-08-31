@@ -1,9 +1,26 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    {% if is_granted ("IS_AUTHENTICATED_REMEMBERED") %}
 
 <div class="intro-section" id="home-section">
       
+    <div class="slide-1" style="background-image: url('images/hero_1.jpg');" data-stellar-background-ratio="0.5">
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-12">
+              <div class="row align-items-center">
+                <div class="col-lg-6 mb-4">
+                  <h1>Learn From The Expert</h1>
+                  <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime ipsa nulla sed quis rerum amet natus quas necessitatibus.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+</div>
+    {% else %}
       <div class="slide-1" style="background-image: url('images/hero_1.jpg');" data-stellar-background-ratio="0.5">
         <div class="container">
           <div class="row align-items-center">
@@ -13,8 +30,8 @@
                   <h1>Learn From The Expert</h1>
                   <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime ipsa nulla sed quis rerum amet natus quas necessitatibus.</p>
                 </div>
-
-                <div class="col-lg-5 ml-auto" data-aos="fade-up" data-aos-delay="500">
+                
+                <div class="col-lg-5 ml-auto">
                 <div class="form-box">
                 <div class="form-group ">
                   {{ form_start(registrationForm) }}
@@ -64,7 +81,7 @@
         </div>
       </div>
     </div>
-
+    {% endif %}
     <br>
     <br>
     <br>
@@ -149,17 +166,11 @@
             </div>
             </div>
         {% endfor %}
+        <a href="{{ path ('show_coaches') }}" class="" style="text-decoration:none;color:#313131;font-size:1rem;">See more <i class="fas fa-chevron-circle-right"></i></a>
         </div>
         </div>
     </div>
 </div>
-
-
-
-<section class="newsletter-section">
-<div class="container">
-<div class="row">
-<div class="col-sm-12">
 	
 </div>
 </div>
