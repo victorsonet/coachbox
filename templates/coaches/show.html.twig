@@ -3,51 +3,43 @@
 {% block title %} Coach: {{ coach.firstName }} {{ coach.lastName }} {% endblock %}
 
 {% block body %}
-<div class="container">
+<div class="coach-section">
+<div class="container d-flex justify-content-center">
     <div class="row">
         <div class="col-12">
-            <h2 class="my-4">Coach</h2>
-            <div style="box-shadow: 2px 3px 9px 4px rgba(0,0,0,0.04);">
-                <div class="q-container-show p-4">
-                    <div class="row">
-                        <div class="col-2 text-center">
-                            <img src="{{asset ('images/img_avatar3.png')}}" width="100" height="100">
-                        </div>
-                        <div class="col">
-                            <h1 class="q-title-show">{{ coach.firstName }} {{ coach.lastName }} {% if (reviewavg.avg | round(1, 'floor')) == 0 %}
+                <div class="card" style="width:100%">
+                    <img src="{{ asset ('images/cardbg.jpg') }}" alt="card backgroud" class="card-img ">
+                    <img src="{{ asset ('images/img_avatar3.png') }}" alt="profile image" class="profile-img mx-auto d-block">
+                    <h1 style="text-align:center;">{{ coach.firstName }} {{ coach.lastName }} {% if (reviewavg.avg | round(1, 'floor')) == 0 %}
                             {% else %}
                             - {{ reviewavg.avg | round(1, 'floor') }}
                             {% endif %}</h1>
-                            {% if reviewitems is empty %}
-                            No reviews
-                            {% else %}
-                            Review: {{ (reviewitems|map(r => r.stars)|reduce((carry, v) => carry + v) / reviewitems|length) | round(1, 'floor')}}
-                            {% endif %}
-                            <div class="q-display p-3">
-                                <i class="fa fa-quote-left mr-3"></i>
-                                <p class="d-inline">{{ coach.achievements }}</p>
-                                
-                                {% for game in coach.games %}
-                                <p class="pt-4"><strong>{{ game.name }} </strong></p>
-                                {% endfor %}
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                    <p class="job-title" style="text-align:center;">Coach</p>
+                    <p class="about" style="text-align:center;">{{ coach.achievements }}</p>
+                    {% if reviewitems is empty %}
+                        No reviews
+                    {% else %}
+                        Review: {{ (reviewitems|map(r => r.stars)|reduce((carry, v) => carry + v) / reviewitems|length) | round(1, 'floor')}}
+                    {% endif %}
+                    <ul class="social-media">
+                        <li><a href="#"><i class="fab fa-facebook-square"></i></a></li>
+                        <li><a href="#"><i class="fab fa-twitter-square"></i></a></li>
+                        <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                        <li><a href="#"><i class="fab fa-google-plus-square"></i></a></li>
+                    </ul>
+                </div>                               
         </div>
     </div>
-
+</div>
+</div>
+    <div class="container">
     <ul class="list-unstyled">
+        <div class="row justify-content-center">
         {% for product in products %}
-            <li class="mb-4">
+        <div class="card" style="background:white;color:black;">
                 <div class="d-flex justify-content-center">
-                    <div class="mr-2 pt-2">
-                        <img src="{{asset ('images/tisha.png')}}" width="50" height="50">
-                    </div>
-                    <div class="mr-3 pt-2">
-                       <p>{{ product.type }}</p>Description - {{ product.description }} : {{ product.price }}$
+                    <div class="mx-3 py-2">
+                       <p style="text-align:center;">{{ product.type }}</p>Description - {{ product.description }} : {{ product.price }}$
                        <p>{{ product.game.name }}
                     </div>
                     {% if is_granted("ROLE_COACH") and user.id == app.user.id %}
@@ -62,9 +54,12 @@
                     </div>
                     {% endif %}
                 </div>
-            </li>
+        </div>
         {% endfor %}
+        </div>
     </ul>
+    </div>
+    <div class="container">
     {% if is_granted("ROLE_COACH") and user.id == app.user.id %}
     <p>
         <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
@@ -85,14 +80,21 @@
 
     {% if is_granted("ROLE_COACH") %}
     {% else %}
-    <div class="mt-5">
-        <h5> Review </h5>
+    <div class="mt-5 d-flex justify-content-center">
         <div class="card card-body">
             {{ form_start(reviewform) }}
-            {{ form_row(reviewform.stars) }}
+            <div class="rater">
+            {{ form_label(reviewform.stars) }}
+            <i class="far fa-star checked" id="one"></i>
+            <i class="far fa-star unchecked" id="two"></i>
+            <i class="far fa-star unchecked" id="three"></i>
+            <i class="far fa-star unchecked" id="four"></i>
+            <i class="far fa-star unchecked" id="five"></i>
+            </div>           
             {{ form_row(reviewform.description, {'attr': {'class': 'form-control'}}) }}
             <div class="row">
                 <div class="col">
+                <br>
             {{ form_widget(reviewform.save, {'attr': {'class': 'btn btn-primary'}}) }}
                 </div>
             </div class="row">
@@ -100,7 +102,8 @@
         </div>
     </div>
     {% endif %}
-    <div class="mt-5">
+    </div>
+    <div class="m-5">
         {% for reviewitem in reviewitems %}
             <div class="card card-body"
                 <li>

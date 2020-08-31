@@ -39,7 +39,7 @@
 }
 
     .coach-section .card .card-img{
-        width: 20rem;
+        width: 100%;
         height: 15rem;
         object-fit: cover;
         clip-path: polygon(0 0, 100% 0, 100% 78%, 0 100%);
@@ -240,6 +240,7 @@
 .footer{
     background: #152F4F;
     color:white;
+    height: auto;
 }
 
     .footer .links .ul{
@@ -332,4 +333,43 @@ position: relative; }
     transform: translateY(-50%);
     }
 
-    
+.rating {
+    width: 226px;
+    margin: 0 auto 1em;
+    font-size: 45px;
+    overflow:hidden;
+}
+.rating input {
+float: right;
+opacity: 0;
+position: absolute;
+}
+.rating a,
+.rating label {
+    float:right;
+    color: #aaa;
+    text-decoration: none;
+    -webkit-transition: color .4s;
+    -moz-transition: color .4s;
+    -o-transition: color .4s;
+    transition: color .4s;
+}
+.rating label:hover ~ label,
+.rating input:focus ~ label,
+.rating label:hover,
+.rating a:hover,
+.rating a:hover ~ a,
+.rating a:focus,
+.rating a:focus ~ a		{
+    color: orange;
+    cursor: pointer;
+}
+
+.checked
+{
+color:orange;
+}
+.unchecked
+{
+color:orange;
+}
