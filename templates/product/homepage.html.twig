@@ -1,60 +1,25 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-</div>
-<div class="jumbotron-img jumbotron jumbotron-fluid">
-    <div class="container">
-        <h1 class="display-4">The list of products!</h1>
-    </div>
-</div>
+<div class="coach-section">
 <div class="container">
-    {#<div>
-        <form method="get" action="{{ path('show_coaches') }}">
-            <input type="search" name="term" value="{{ term }}"/>
-        </form>
-    </div>#}
-    <div class="row">
+    <div class="row justify-content-md-center">
 
         {% for product in products %}
         
-        <div class="col-xs-12 col-sm-6 col-lg-4">
-                <div class="box">							
-                    <div class="icon">
-                        <img src="{{ asset ('images/img_avatar3.png')}}" width="80" height="80">
-                        <div class="info mt-1">
-                            <a class="title" href="{{ path('show_product', {id: product.id}) }}"> 
-                            {{ product.coach.firstName }} {{ product.coach.lastName }} - {{ product.type }}</a>
-                            <p>
-                            {{ product.description }}    
-                            </p>
-                            
-                            <div class="more">
-                                <a href="{{ path ('show_product', {id: product.id}) }}">
-                                    Read More <i class="fa fa-angle-double-right"></i>
-                                </a>
-                            </div>
-                        
-                        </div>
-                    
+                <div class="col-lg-4">							
+                    <div class="card">
+                        <img src="{{ asset ('images/csgo.jpg') }}" alt="card backgroud" class="card-img ">
+                        <br>
+                        <br>
+                        {# <img src="{{ asset ('images/img_avatar3.png') }}" alt="profile image" class="profile-img mx-auto d-block"> #}
+                        <h1 style="text-align:center;">{{ product.type }}</h1> 
+                        <a>{{ product.coach.firstName }} {{ product.coach.lastName }}</a>
+                            <a href="{{ path ('show_product', {id: product.id}) }}" class="btn btn-primary">Detail</a>
                     </div>
-                    
-                <div class="space"></div>
-                
-            </div> 
-                            {# <div class="container">
-                    <div class="row">
-                        <div class="col-md-4 col-sm-6">
-                            <img src="{{ asset ('images/magic-photo.png') }}" width="100" height="100">
-                        </div>
-                            <a class="q-title" href="{{ path('show_product', {id: product.id}) }}">
-                            <h2>{{ product.coach.firstName }} {{ product.coach.lastName }}
-                           - {{ product.type }}
-                            </h2>
-                            </a>
-                                <p class="pt-4">{{ product.game.name }}</p>
-                                {# <p class="pt-4"><strong>{{ product.game }}</strong></p> #}
-                        {# </div>
-                    </div> #}
-    </div> 
-        {% endfor %}
+                </div>           
+{% endfor %}
+    </div>
+</div>
+</div>
 {% endblock %}

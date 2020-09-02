@@ -241,6 +241,7 @@
     background: #152F4F;
     color:white;
     height: auto;
+    width: auto;
 }
 
     .footer .links .ul{
@@ -373,3 +374,9 @@ color:orange;
 {
 color:orange;
 }
+
+.right {
+    text-align:right;
+    float:right;
+}
+    

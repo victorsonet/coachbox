@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\Game;
 use App\Entity\Product;
 use App\Entity\Coach;
-
+use App\Repository\CoachRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,9 +22,10 @@ class ProductController extends AbstractController
     /**
      * @Route("/products/{id}", name="show_product")
      */
-    public function product($id)
+    public function product($id, CoachRepository $coachrepo)
     {
         $em=$this->getDoctrine()->getManager();
+
         $prdRepo=$em->getRepository(Product::class);
         $product=$prdRepo->find($id);
 
